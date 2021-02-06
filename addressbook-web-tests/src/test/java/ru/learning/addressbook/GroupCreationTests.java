@@ -6,7 +6,6 @@ import org.testng.annotations.*;
 import static org.testng.Assert.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
-//import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class GroupCreationTests {
@@ -17,7 +16,6 @@ public class GroupCreationTests {
 
   @BeforeClass(alwaysRun = true)
   public void setUp() throws Exception {
-    //System.setProperty("webdriver.chrome.driver", "C:/Windows/System32/chromedriver.exe");
     driver = new FirefoxDriver();
     baseUrl = "https://www.google.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -37,7 +35,7 @@ public class GroupCreationTests {
     driver.findElement(By.name("new")).click();
     driver.findElement(By.name("group_name")).click();
     driver.findElement(By.name("group_name")).clear();
-    driver.findElement(By.name("group_name")).sendKeys("Group 0602");
+    driver.findElement(By.name("group_name")).sendKeys("Group 0602-01");
     driver.findElement(By.name("group_header")).click();
     driver.findElement(By.name("group_header")).clear();
     driver.findElement(By.name("group_header")).sendKeys("Группа 6 февраля");
