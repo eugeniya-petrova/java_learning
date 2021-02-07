@@ -9,14 +9,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class ContactCreationTests {
   private WebDriver wd;
 
-  @BeforeClass(alwaysRun = true)
+  @BeforeMethod(alwaysRun = true)
   public void setUp() throws Exception {
     wd = new FirefoxDriver();
     wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-  }
-
-  @Test
-  public void testContactCreationTests() throws Exception {
     wd.get("http://localhost/addressbook/");
     wd.findElement(By.name("user")).click();
     wd.findElement(By.name("user")).clear();
@@ -25,6 +21,10 @@ public class ContactCreationTests {
     wd.findElement(By.name("pass")).clear();
     wd.findElement(By.name("pass")).sendKeys("secret");
     wd.findElement(By.xpath("//input[@value='Login']")).click();
+  }
+
+  @Test
+  public void testContactCreation() throws Exception {
     wd.findElement(By.linkText("add new")).click();
     wd.findElement(By.name("firstname")).click();
     wd.findElement(By.name("firstname")).clear();
@@ -62,11 +62,11 @@ public class ContactCreationTests {
     wd.findElement(By.name("address2")).sendKeys("Лондон, улица Пикадилли, дом 2");
     wd.findElement(By.xpath("(//input[@name='submit'])[2]")).click();
     wd.findElement(By.linkText("home page")).click();
-    wd.findElement(By.linkText("Logout")).click();
   }
 
-  @AfterClass(alwaysRun = true)
+  @AfterMethod(alwaysRun = true)
   public void tearDown() throws Exception {
+    wd.findElement(By.linkText("Logout")).click();
     wd.quit();
   }
 
