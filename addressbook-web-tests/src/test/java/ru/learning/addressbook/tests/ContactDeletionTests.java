@@ -1,4 +1,4 @@
-package ru.learning.addressbook;
+package ru.learning.addressbook.tests;
 
 import org.testng.annotations.Test;
 
@@ -6,8 +6,8 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() throws Exception {
-        selectContact();
-        deleteSelectedContacts();
+        app.selectContact();
+        app.deleteSelectedContacts();
     }
 
 }
