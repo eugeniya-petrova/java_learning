@@ -7,7 +7,6 @@ public class ContactDeletionTests extends TestBase {
     @Test
     public void testContactDeletion() throws Exception {
         selectContact();
-        //acceptNextAlert = true;
         deleteSelectedContacts();
     }
 
