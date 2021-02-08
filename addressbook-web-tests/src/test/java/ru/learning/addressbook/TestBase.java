@@ -138,4 +138,14 @@ public class TestBase {
     protected void selectGroup() {
       wd.findElement(By.name("selected[]")).click();
     }
+
+    protected void selectContact() {
+        wd.findElement(By.name("selected[]")).click();
+    }
+
+    protected void deleteSelectedContacts() {
+        wd.findElement(By.xpath("//input[@value='Delete']")).click();
+        //assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
+        wd.switchTo().alert().accept();
+    }
 }
