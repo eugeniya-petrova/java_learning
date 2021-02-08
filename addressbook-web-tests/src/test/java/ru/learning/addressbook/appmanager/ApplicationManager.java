@@ -28,7 +28,7 @@ public class ApplicationManager {
     }
 
     public void stop() {
-        wd.findElement(By.linkText("Logout")).click();
+        sessionHelper.logout();
         wd.quit();
     }
 
@@ -61,4 +61,8 @@ public class ApplicationManager {
     public ContactHelper getContactHelper() {
         return contactHelper;
     }
+
+    //public SessionHelper getSessionHelper() {
+       // return sessionHelper;
+    //}
 }
