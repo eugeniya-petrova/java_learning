@@ -24,6 +24,12 @@ public class GroupHelper extends HelperBase {
         type(By.name("group_footer"), groupData.getFooter());
     }
 
+    public void updateGroupForm(String modif) {
+        type(By.name("group_name"), getLocatorText(By.name("group_name")) + modif);
+        type(By.name("group_header"), getLocatorText(By.name("group_header")) + modif);
+        type(By.name("group_footer"), getLocatorText(By.name("group_footer")) + modif);
+    }
+
     public void initGroupCreation() {
         click(By.name("new"));
     }

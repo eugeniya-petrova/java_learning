@@ -21,6 +21,11 @@ public class HelperBase {
         wd.findElement(locator).sendKeys(text);
     }
 
+    protected String getLocatorText(By locator) {
+        String textElement = wd.findElement(locator).getAttribute("value");
+        return textElement;
+    }
+
     public boolean isAlertPresent() {
         try {
             wd.switchTo().alert();
