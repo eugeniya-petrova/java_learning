@@ -11,7 +11,7 @@ public class GroupModificationTests extends TestBase {
         app.getNavigationHelper().gotoGroupPage();
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().initGroupModification();
-        app.getGroupHelper().fillGroupForm(new GroupData(By.name("group_name").toString() + "модиф", "Группа 9 февраля модиф", "Группа 9 февраля 2021 модиф"));
+        app.getGroupHelper().fillGroupForm(new GroupData("Group 0902-01 модиф", "Группа 9 февраля модиф", "Группа 9 февраля 2021 модиф"));
         app.getGroupHelper().submitGroupModification();
         app.getGroupHelper().returnToGroupPage();
     }
