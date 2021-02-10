@@ -22,6 +22,14 @@ public class MyFirstProgram {
 
         Rectangle r = new Rectangle(2, 17);
         System.out.println("Площадь прямоугольника со сторонами " + r.a + " и " + r.b + " = " + r.area());
+
+        Fish myFish = new Fish("зелёная");
+        Dog myDog = new Dog("синяя");
+        String fishResponse = myFish.speak("рыбка");
+        String dogResponse = myDog.speak("собака");
+        System.out.println(fishResponse);
+        System.out.println(dogResponse);
+        myDog.sleep();
     }
 
     public static void hello(String somebody) {
