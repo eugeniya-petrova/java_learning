@@ -13,16 +13,14 @@ public class Equation {
         this.b = b;
         this.c = c;
 
-        double d = b*b - 4*a*c;
+        double d = b * b - 4 * a * c;
 
         if (d > 0) {
             n = 2;
+        } else if (d == 0) {
+            n = 1;
         } else {
-            if (d == 0) {
-                n = 1;
-            } else {
-                n = 0;
-            }
+            n = 0;
         }
     }
 
