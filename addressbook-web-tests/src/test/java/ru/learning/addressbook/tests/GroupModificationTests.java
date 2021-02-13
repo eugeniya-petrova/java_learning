@@ -8,6 +8,11 @@ public class GroupModificationTests extends TestBase {
     @Test
     public void testGroupModification() {
         app.getNavigationHelper().gotoGroupPage();
+
+        if (! app.getGroupHelper().whereGroup()) {
+            app.getGroupHelper().createGroup(false, new GroupData("for update", "for update", "for update"), null);
+        }
+
         app.getGroupHelper().selectGroup();
         app.getGroupHelper().initGroupModification();
         app.getGroupHelper().fillGroupForm(true, null, " модифай");
