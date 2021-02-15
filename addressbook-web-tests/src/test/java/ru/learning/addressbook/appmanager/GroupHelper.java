@@ -18,25 +18,11 @@ public class GroupHelper extends HelperBase {
         click(By.name("submit"));
     }
 
-    public void fillGroupForm(boolean update, GroupData groupData, String modif) {
-        if (update) {
-            type(By.name("group_name"), getLocatorText(By.name("group_name")) + modif);
-            type(By.name("group_header"), getLocatorText(By.name("group_header")) + modif);
-            type(By.name("group_footer"), getLocatorText(By.name("group_footer")) + modif);
-        } else {
+    public void fillGroupForm(GroupData groupData) {
             type(By.name("group_name"), groupData.getName());
             type(By.name("group_header"), groupData.getHeader());
             type(By.name("group_footer"), groupData.getFooter());
-        }
     }
-
-    /*
-    public void updateGroupForm(String modif) {
-        type(By.name("group_name"), getLocatorText(By.name("group_name")) + modif);
-        type(By.name("group_header"), getLocatorText(By.name("group_header")) + modif);
-        type(By.name("group_footer"), getLocatorText(By.name("group_footer")) + modif);
-    }
-     */
 
     public void initGroupCreation() {
         click(By.name("new"));
@@ -62,9 +48,9 @@ public class GroupHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void createGroup(boolean update, GroupData groupData, String modif) {
+    public void createGroup(GroupData groupData) {
         initGroupCreation();
-        fillGroupForm(update, groupData, modif);
+        fillGroupForm(groupData);
         submitGroupCreation();
         returnToGroupPage();
     }
