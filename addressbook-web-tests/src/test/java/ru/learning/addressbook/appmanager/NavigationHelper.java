@@ -10,6 +10,12 @@ public class NavigationHelper extends HelperBase {
     }
 
     public void gotoGroupPage() {
+        if (isElementPresent(By.tagName("h1"))
+                && getLocatorText(By.tagName("h1")).equals("Groups")
+                && isElementPresent(By.name("new"))) {
+            return;
+        }
+
         click(By.linkText("groups"));
     }
 
