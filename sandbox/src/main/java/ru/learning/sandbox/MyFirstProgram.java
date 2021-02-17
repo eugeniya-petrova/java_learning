@@ -30,6 +30,21 @@ public class MyFirstProgram {
         System.out.println(fishResponse);
         System.out.println(dogResponse);
         myDog.sleep();
+        System.out.println();
+
+        Equation eq = new Equation(1, 2, 3);
+        int rootNum = eq.rootNumber();
+        switch (rootNum) {
+            case 2:
+                System.out.println("Это уравнение с двумя корнями");
+                break;
+            case 1:
+                System.out.println("Это уравнение с одним корнем");
+                break;
+            case 0:
+                System.out.println("У этого уравнения нет корней");
+                break;
+        }
     }
 
     public static void hello(String somebody) {
