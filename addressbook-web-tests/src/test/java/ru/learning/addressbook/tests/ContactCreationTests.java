@@ -7,7 +7,7 @@ public class ContactCreationTests extends TestBase {
 
   @Test
   public void testContactCreation() throws Exception {
-    app.getContactHelper().createContact(new ContactData("Фёдор", "Шаляпин", "Казань, улица Чебоксарская, дом 11", "+7(495)1112233", "+79054445566", "+74957778899", "+74950001122", "test1302@test.ru", "test1302-1@test.ru", "test1302-2@test.ru", "Group модиф", "Санкт-Петербург, улица Пушкина, дом 12"), true);
+    app.getContactHelper().createContact(new ContactData("Фёдор", "Шаляпин", "Казань, улица Чебоксарская, дом 11", "+7(495)1112233", null, null, null, "test1802@test.ru", null, null, "Group модиф", "Санкт-Петербург, улица Пушкина, дом 12"), true);
     app.getNavigationHelper().returnToHomePage();
   }
 

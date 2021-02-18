@@ -10,7 +10,7 @@ public class GroupDeletionTests extends TestBase {
         app.getNavigationHelper().gotoGroupPage();
 
         if (! app.getGroupHelper().whereGroup()) {
-            app.getGroupHelper().createGroup(new GroupData("for delete", "for delete", "for delete"));
+            app.getGroupHelper().createGroup(new GroupData("for delete", "for delete", null));
         }
 
         app.getGroupHelper().selectGroup();
