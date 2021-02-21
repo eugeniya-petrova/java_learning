@@ -1,7 +1,10 @@
 package ru.learning.addressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.learning.addressbook.model.GroupData;
+
+import java.util.List;
 
 public class GroupDeletionTests extends TestBase {
 
@@ -13,9 +16,12 @@ public class GroupDeletionTests extends TestBase {
             app.getGroupHelper().createGroup(new GroupData("for delete", "for delete", null));
         }
 
+        List<GroupData> before = app.getGroupHelper().getGroupList();
         app.getGroupHelper().selectGroup(0);
         app.getGroupHelper().deleteSelectedGroups();
         app.getGroupHelper().returnToGroupPage();
+        List<GroupData> after = app.getGroupHelper().getGroupList();
+        Assert.assertEquals(after.size(), before.size() - 1);
     }
 
 }
