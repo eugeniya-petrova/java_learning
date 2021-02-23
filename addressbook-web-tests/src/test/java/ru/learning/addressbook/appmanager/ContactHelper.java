@@ -76,12 +76,12 @@ public class ContactHelper extends HelperBase {
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> rows = wd.findElements(By.xpath("//table[@id='maintable']//tr"));
 
-        //проходимся по всем строкам таблицы, исключая строку заголовка, поэтому счётчик начинается с 1
+        //проходим по всем строкам таблицы, исключая строку заголовка, поэтому счётчик начинается с 1
         for (int i = 1; i < rows.size(); i++) {
             List<WebElement> cells = rows.get(i).findElements(By.tagName("td"));
             String lastName = cells.get(1).getText(); //во второй ячейке фамилия
             String firstName = cells.get(2).getText(); //в третьей ячейке имя
-            int id = Integer.parseInt(cells.get(0).getAttribute("value")); //в первой ячейке-чекбоксе берём value
+            int id = Integer.parseInt(cells.get(0).findElement(By.name("selected[]")).getAttribute("value")); //в первой ячейке ищем чекбокс, берём его value
             ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null, null, null, null, null, null, null);
             contacts.add(contact);
         }
