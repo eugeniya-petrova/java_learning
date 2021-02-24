@@ -13,7 +13,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModification() {
         if (! app.getContactHelper().whereContact()) {
-            app.getContactHelper().createContact(new ContactData("for update", "for update", "for update", "+7(495)1112233", "+79054445566", "+74957778899", "+74950001122", "test0902@test.ru", "test0902-1@test.ru", "test0902-2@test.ru", "Group модиф", "Санкт-Петербург, улица Пушкина, дом 8"), true);
+            app.getContactHelper().createContact(new ContactData("for update", "for update", "for update", "+7(495)3332211", null, null, null, "test-update@test.ru", null, null, null, null), true);
             app.getNavigationHelper().returnToHomePage();
         }
 

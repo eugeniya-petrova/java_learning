@@ -33,12 +33,16 @@ public class ContactHelper extends HelperBase {
         type(By.name("email3"), contactData.getEmail3());
 
         if (create) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            if (contactData.getGroup() != null) {
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            } else {
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
+            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
-
-        type(By.name("address2"), contactData.getAddress2());
+		
+		type(By.name("address2"), contactData.getAddress2());
     }
 
     public void initContactCreation() {

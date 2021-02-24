@@ -11,7 +11,7 @@ public class ContactDeletionTests extends TestBase {
     @Test
     public void testContactDeletion() throws Exception {
         if (! app.getContactHelper().whereContact()) {
-            app.getContactHelper().createContact(new ContactData("for delete", "for delete", "for delete", null, null, null, null, null, null, null, "Group модиф", null), true);
+            app.getContactHelper().createContact(new ContactData("for delete", "for delete", "for delete", null, null, null, null, null, null, null, null, null), true);
             app.getNavigationHelper().returnToHomePage();
         }
 
