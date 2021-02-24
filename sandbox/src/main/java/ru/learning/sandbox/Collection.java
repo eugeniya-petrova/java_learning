@@ -1,10 +1,11 @@
 package ru.learning.sandbox;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Collections {
+import static java.util.Collections.reverse;
+
+public class Collection {
 
     public static void main(String[] args) {
         String[] langs = {"английский", "французский", "русский", "немецкий"};
@@ -17,7 +18,21 @@ public class Collections {
          */
 
         List<String> languages = Arrays.asList("Java", "Python", null, "C#");
+        System.out.println("Языки в обратном порядке:");
 
+        reverse(languages);
+        for (String l : languages) {
+            if (l != null) {
+                System.out.println("Я изучаю " + l);
+            } else {
+                System.out.println("Я ничего не изучаю");
+            }
+        }
+
+        System.out.println();
+        System.out.println("А теперь наоборот:");
+
+        reverse(languages);
         for (String l : languages) {
             if (l != null) {
                 System.out.println("Я изучаю " + l);
