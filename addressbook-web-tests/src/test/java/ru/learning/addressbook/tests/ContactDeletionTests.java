@@ -8,7 +8,7 @@ import java.util.List;
 
 public class ContactDeletionTests extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testContactDeletion() throws Exception {
         if (! app.getContactHelper().whereContact()) {
             app.getContactHelper().createContact(new ContactData("for delete", "for delete", "for delete", null, null, null, null, null, null, null, null, null), true);
