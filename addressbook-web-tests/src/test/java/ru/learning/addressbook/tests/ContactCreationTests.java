@@ -1,6 +1,7 @@
 package ru.learning.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.learning.addressbook.model.ContactData;
 import ru.learning.addressbook.model.GroupData;
