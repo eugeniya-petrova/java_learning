@@ -6,12 +6,13 @@ import org.testng.annotations.Test;
 import ru.learning.addressbook.model.ContactData;
 
 import java.util.List;
+import java.util.Set;
 
 public class ContactDeletionTests extends TestBase {
 
     @BeforeMethod
     public void checkPreconditions() {
-        if (app.contact().list().size() == 0) {
+        if (app.contact().set().size() == 0) {
             app.contact().create(new ContactData().withFirstName("for delete"), true);
             app.goTo().homePage();
         }
@@ -19,13 +20,13 @@ public class ContactDeletionTests extends TestBase {
 
     @Test(enabled = false)
     public void testContactDeletion() throws Exception {
-        List<ContactData> before = app.contact().list();
-        int index = before.size() - 1;
-        app.contact().delete(index);
-        List<ContactData> after = app.contact().list();
+        Set<ContactData> before = app.contact().set();
+        ContactData deletedContact = before.iterator().next();
+        app.contact().delete(deletedContact);
+        Set<ContactData> after = app.contact().set();
         Assert.assertEquals(after.size(), before.size() - 1);
 
-        before.remove(index);
+        before.remove(deletedContact);
         Assert.assertEquals(before, after);
     }
 

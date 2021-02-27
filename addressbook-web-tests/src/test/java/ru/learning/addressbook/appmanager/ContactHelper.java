@@ -8,7 +8,9 @@ import org.testng.Assert;
 import ru.learning.addressbook.model.ContactData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -53,6 +55,10 @@ public class ContactHelper extends HelperBase {
         wd.findElements(By.name("selected[]")).get(index).click();
     }
 
+    public void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+    }
+
     public void deleteSelectedContacts() {
         click(By.xpath("//input[@value='Delete']"));
         wd.switchTo().alert().accept();
@@ -72,7 +78,7 @@ public class ContactHelper extends HelperBase {
         submitContactCreation();
     }
 
-    public void modify(int index, ContactData contact, boolean create) {
+    public void modify(ContactData contact, boolean create) {
         initContactModification(index);
         fillContactForm(contact, create);
         submitContactModification();
@@ -83,12 +89,33 @@ public class ContactHelper extends HelperBase {
         deleteSelectedContacts();
     }
 
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
+        deleteSelectedContacts();
+    }
+
     public boolean whereContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
     public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> rows = wd.findElements(By.xpath("//table[@id='maintable']//tr"));
+
+        //проходим по всем строкам таблицы, исключая строку заголовка, поэтому счётчик начинается с 1
+        for (int i = 1; i < rows.size(); i++) {
+            List<WebElement> cells = rows.get(i).findElements(By.tagName("td"));
+            String lastName = cells.get(1).getText(); //во второй ячейке фамилия
+            String firstName = cells.get(2).getText(); //в третьей ячейке имя
+            int id = Integer.parseInt(cells.get(0).findElement(By.name("selected[]")).getAttribute("value")); //в первой ячейке ищем чекбокс, берём его value
+            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+        }
+
+        return contacts;
+    }
+
+    public Set<ContactData> set() {
+        Set<ContactData> contacts = new HashSet<ContactData>();
         List<WebElement> rows = wd.findElements(By.xpath("//table[@id='maintable']//tr"));
 
         //проходим по всем строкам таблицы, исключая строку заголовка, поэтому счётчик начинается с 1
