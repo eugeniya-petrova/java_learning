@@ -1,51 +1,19 @@
 package ru.learning.addressbook.model;
 
 public class ContactData {
-    private int id;
-    private final String firstName;
-    private final String lastName;
-    private final String address;
-    private final String homePhone;
-    private final String mobilePhone;
-    private final String workPhone;
-    private final String fax;
-    private final String email;
-    private final String email2;
-    private final String email3;
-    private final String group;
-    private final String address2;
-
-    public ContactData(int id, String firstName, String lastName, String address, String homePhone, String mobilePhone, String workPhone, String fax, String email, String email2, String email3, String group, String address2) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.homePhone = homePhone;
-        this.mobilePhone = mobilePhone;
-        this.workPhone = workPhone;
-        this.fax = fax;
-        this.email = email;
-        this.email2 = email2;
-        this.email3 = email3;
-        this.group = group;
-        this.address2 = address2;
-    }
-
-    public ContactData(String firstName, String lastName, String address, String homePhone, String mobilePhone, String workPhone, String fax, String email, String email2, String email3, String group, String address2) {
-        this.id = 0;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.homePhone = homePhone;
-        this.mobilePhone = mobilePhone;
-        this.workPhone = workPhone;
-        this.fax = fax;
-        this.email = email;
-        this.email2 = email2;
-        this.email3 = email3;
-        this.group = group;
-        this.address2 = address2;
-    }
+    private int id = 0;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String homePhone;
+    private String mobilePhone;
+    private String workPhone;
+    private String fax;
+    private String email;
+    private String email2;
+    private String email3;
+    private String group;
+    private String address2;
 
     public int getId() {
         return id;
@@ -99,8 +67,70 @@ public class ContactData {
         return address2;
     }
 
-    public void setId(int id) {
+    //каждый из сеттеров ниже создаёт объект типа ContactData
+    public ContactData withId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public ContactData withFirstName(String firstName) {
+        this.firstName = firstName;
+        return this;
+    }
+
+    public ContactData withLastName(String lastName) {
+        this.lastName = lastName;
+        return this;
+    }
+
+    public ContactData withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public ContactData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return this;
+    }
+
+    public ContactData withMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
+        return this;
+    }
+
+    public ContactData withWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+        return this;
+    }
+
+    public ContactData withFax(String fax) {
+        this.fax = fax;
+        return this;
+    }
+
+    public ContactData withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public ContactData withEmail2(String email2) {
+        this.email2 = email2;
+        return this;
+    }
+
+    public ContactData withEmail3(String email3) {
+        this.email3 = email3;
+        return this;
+    }
+
+    public ContactData withGroup(String group) {
+        this.group = group;
+        return this;
+    }
+
+    public ContactData withAddress2(String address2) {
+        this.address2 = address2;
+        return this;
     }
 
     @Override

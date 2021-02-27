@@ -9,16 +9,16 @@ import java.util.List;
 
 public class GroupCreationTests extends TestBase {
 
-    @Test(enabled = false)
+    @Test
     public void testGroupCreation() throws Exception {
         app.goTo().groupPage();
         List<GroupData> before = app.group().list();
-        GroupData group = new GroupData("Group 2702-01", "Группа 27 февраля", "Группа 27 февраля 2021");
+        GroupData group = new GroupData().withName("Group 2702-02").withHeader("Группа 27 02").withFooter("Группа 27 02 2021");
         app.group().create(group);
         List<GroupData> after = app.group().list();
         Assert.assertEquals(after.size(), before.size() + 1);
 
-        group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
+        group.withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
         before.add(group);
         Comparator<? super GroupData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
         before.sort(byId);

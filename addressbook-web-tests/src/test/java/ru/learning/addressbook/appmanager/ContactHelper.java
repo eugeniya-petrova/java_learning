@@ -97,8 +97,7 @@ public class ContactHelper extends HelperBase {
             String lastName = cells.get(1).getText(); //во второй ячейке фамилия
             String firstName = cells.get(2).getText(); //в третьей ячейке имя
             int id = Integer.parseInt(cells.get(0).findElement(By.name("selected[]")).getAttribute("value")); //в первой ячейке ищем чекбокс, берём его value
-            ContactData contact = new ContactData(id, firstName, lastName, null, null, null, null, null, null, null, null, null, null);
-            contacts.add(contact);
+            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
 
         return contacts;
