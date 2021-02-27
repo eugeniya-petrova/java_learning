@@ -11,18 +11,18 @@ public class ContactDeletionTests extends TestBase {
 
     @BeforeMethod
     public void checkPreconditions() {
-        if (! app.getContactHelper().whereContact()) {
-            app.getContactHelper().createContact(new ContactData("for delete", "for delete", "for delete", null, null, null, null, null, null, null, null, null), true);
-            app.getNavigationHelper().returnToHomePage();
+        if (app.contact().list().size() == 0) {
+            app.contact().create(new ContactData("for delete", "for delete", "for delete", null, null, null, null, null, null, null, null, null), true);
+            app.goTo().homePage();
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testContactDeletion() throws Exception {
-        List<ContactData> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contact().list();
         int index = before.size() - 1;
-        app.getContactHelper().deleteContact(index);
-        List<ContactData> after = app.getContactHelper().getContactList();
+        app.contact().delete(index);
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size() - 1);
 
         before.remove(index);
