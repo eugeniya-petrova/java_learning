@@ -17,7 +17,7 @@ public class ContactCreationTests extends TestBase {
     public void testContactCreation() throws Exception {
         ContactSet before = app.contact().set();
         ContactData contact = new ContactData()
-                .withFirstName("Мигель").withLastName("Мигелидзе").withAddress("адрес 2702-02").withHomePhone("+7(495)1112233").withEmail("testcontact@test.ru").withGroup("Group модиф").withAddress2("адрес 2702-03");
+                .withFirstName("Пьетро").withLastName("Пепе").withAddress("адрес 2802-01").withHomePhone("+7(495)1112233").withEmail("testcontact@test.ru").withGroup("Group модиф").withAddress2("адрес 2802-02");
         app.contact().create(contact, true);
         app.goTo().homePage();
         ContactSet after = app.contact().set();
