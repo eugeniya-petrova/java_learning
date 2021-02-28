@@ -1,11 +1,16 @@
 package ru.learning.addressbook.tests;
 
+import org.hamcrest.CoreMatchers;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.learning.addressbook.model.GroupData;
+import ru.learning.addressbook.model.GroupSet;
 
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupModificationTests extends TestBase {
 
@@ -19,15 +24,12 @@ public class GroupModificationTests extends TestBase {
 
     @Test(enabled = false)
     public void testGroupModification() {
-        Set<GroupData> before = app.group().set();
+        GroupSet before = app.group().set();
         GroupData modifiedGroup = before.iterator().next();
         GroupData group = new GroupData().withId(modifiedGroup.getId()).withName("Group модиф").withHeader("Group модиф");
         app.group().modify(group);
-        Set<GroupData> after = app.group().set();
-        Assert.assertEquals(after.size(), before.size());
-
-        before.remove(modifiedGroup);
-        before.add(group);
-        Assert.assertEquals(before, after);
+        GroupSet after = app.group().set();
+        assertThat(after.size(), equalTo(before.size()));
+        assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
     }
 }

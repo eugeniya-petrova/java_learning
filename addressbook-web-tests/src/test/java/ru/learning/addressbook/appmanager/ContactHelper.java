@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.learning.addressbook.model.ContactData;
+import ru.learning.addressbook.model.ContactSet;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -93,8 +94,8 @@ public class ContactHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public Set<ContactData> set() {
-        Set<ContactData> contacts = new HashSet<ContactData>();
+    public ContactSet set() {
+        ContactSet contactSet = new ContactSet();
         List<WebElement> rows = wd.findElements(By.xpath("//table[@id='maintable']//tr"));
 
         //проходим по всем строкам таблицы, исключая строку заголовка, поэтому счётчик начинается с 1
@@ -103,9 +104,9 @@ public class ContactHelper extends HelperBase {
             String lastName = cells.get(1).getText(); //во второй ячейке фамилия
             String firstName = cells.get(2).getText(); //в третьей ячейке имя
             int id = Integer.parseInt(cells.get(0).findElement(By.name("selected[]")).getAttribute("value")); //в первой ячейке ищем чекбокс, берём его value
-            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+            contactSet.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
         }
 
-        return contacts;
+        return contactSet;
     }
 }
