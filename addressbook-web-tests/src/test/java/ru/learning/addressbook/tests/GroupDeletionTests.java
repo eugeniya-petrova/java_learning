@@ -5,7 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.learning.addressbook.model.GroupData;
 
-import java.util.List;
 import java.util.Set;
 
 public class GroupDeletionTests extends TestBase {
@@ -18,7 +17,7 @@ public class GroupDeletionTests extends TestBase {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void testGroupDeletion() throws Exception {
         Set<GroupData> before = app.group().set();
         GroupData deletedGroup = before.iterator().next();

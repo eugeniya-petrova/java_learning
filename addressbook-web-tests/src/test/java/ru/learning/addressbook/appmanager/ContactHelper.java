@@ -64,8 +64,8 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void initContactModification(int index) {
-        wd.findElements(By.xpath("//img[@title='Edit']")).get(index).click();
+    public void initContactModification(int id) {
+        wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
 
     public void submitContactModification() {
@@ -79,14 +79,9 @@ public class ContactHelper extends HelperBase {
     }
 
     public void modify(ContactData contact, boolean create) {
-        initContactModification(index);
+        initContactModification(contact.getId());
         fillContactForm(contact, create);
         submitContactModification();
-    }
-
-    public void delete(int index) {
-        selectContact(index);
-        deleteSelectedContacts();
     }
 
     public void delete(ContactData contact) {
@@ -96,22 +91,6 @@ public class ContactHelper extends HelperBase {
 
     public boolean whereContact() {
         return isElementPresent(By.name("selected[]"));
-    }
-
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> rows = wd.findElements(By.xpath("//table[@id='maintable']//tr"));
-
-        //проходим по всем строкам таблицы, исключая строку заголовка, поэтому счётчик начинается с 1
-        for (int i = 1; i < rows.size(); i++) {
-            List<WebElement> cells = rows.get(i).findElements(By.tagName("td"));
-            String lastName = cells.get(1).getText(); //во второй ячейке фамилия
-            String firstName = cells.get(2).getText(); //в третьей ячейке имя
-            int id = Integer.parseInt(cells.get(0).findElement(By.name("selected[]")).getAttribute("value")); //в первой ячейке ищем чекбокс, берём его value
-            contacts.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
-        }
-
-        return contacts;
     }
 
     public Set<ContactData> set() {

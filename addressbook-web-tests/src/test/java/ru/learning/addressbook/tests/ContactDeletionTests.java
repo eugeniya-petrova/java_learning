@@ -5,7 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.learning.addressbook.model.ContactData;
 
-import java.util.List;
 import java.util.Set;
 
 public class ContactDeletionTests extends TestBase {
@@ -18,7 +17,7 @@ public class ContactDeletionTests extends TestBase {
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testContactDeletion() throws Exception {
         Set<ContactData> before = app.contact().set();
         ContactData deletedContact = before.iterator().next();

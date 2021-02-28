@@ -5,8 +5,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.learning.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 
 public class GroupModificationTests extends TestBase {
@@ -19,7 +17,7 @@ public class GroupModificationTests extends TestBase {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void testGroupModification() {
         Set<GroupData> before = app.group().set();
         GroupData modifiedGroup = before.iterator().next();

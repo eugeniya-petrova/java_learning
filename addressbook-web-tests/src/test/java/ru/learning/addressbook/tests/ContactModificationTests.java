@@ -5,21 +5,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.learning.addressbook.model.ContactData;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 
 public class ContactModificationTests extends TestBase {
 
     @BeforeMethod
     public void checkPreconditions() {
-        if (app.contact().list().size() == 0) {
+        if (app.contact().set().size() == 0) {
             app.contact().create(new ContactData().withFirstName("for update"), true);
             app.goTo().homePage();
         }
     }
 
-    @Test(enabled = false)
+    @Test
     public void testContactModification() {
         Set<ContactData> before = app.contact().set();
         ContactData modifiedContact = before.iterator().next();

@@ -4,13 +4,11 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.learning.addressbook.model.GroupData;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 
 public class GroupCreationTests extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testGroupCreation() throws Exception {
         app.goTo().groupPage();
         Set<GroupData> before = app.group().set();
