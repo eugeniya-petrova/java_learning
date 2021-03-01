@@ -8,10 +8,7 @@ import org.testng.Assert;
 import ru.learning.addressbook.model.ContactData;
 import ru.learning.addressbook.model.ContactSet;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
@@ -52,10 +49,6 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void selectContact(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
-    }
-
     public void selectContactById(int id) {
         wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
@@ -65,7 +58,7 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void initContactModification(int id) {
+    public void initContactModificationById(int id) {
         wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
 
@@ -80,7 +73,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void modify(ContactData contact, boolean create) {
-        initContactModification(contact.getId());
+        initContactModificationById(contact.getId());
         fillContactForm(contact, create);
         submitContactModification();
     }
@@ -101,12 +94,33 @@ public class ContactHelper extends HelperBase {
         //проходим по всем строкам таблицы, исключая строку заголовка, поэтому счётчик начинается с 1
         for (int i = 1; i < rows.size(); i++) {
             List<WebElement> cells = rows.get(i).findElements(By.tagName("td"));
+            int id = Integer.parseInt(cells.get(0).findElement(By.name("selected[]")).getAttribute("value")); //в первой ячейке ищем чекбокс, берём его value
             String lastName = cells.get(1).getText(); //во второй ячейке фамилия
             String firstName = cells.get(2).getText(); //в третьей ячейке имя
-            int id = Integer.parseInt(cells.get(0).findElement(By.name("selected[]")).getAttribute("value")); //в первой ячейке ищем чекбокс, берём его value
-            contactSet.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName));
+            String allPhones = cells.get(5).getText(); //в 6-й ячейке телефоны
+            String allEmails = cells.get(4).getText(); //в 5-й ячейке емейлы
+            String address = cells.get(3).getText(); //в 4-й ячейке адрес
+            contactSet.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName)
+                    .withAllPhones(allPhones).withAllEmails(allEmails).withAddress(address));
         }
 
         return contactSet;
+    }
+
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+        String firstName = getLocatorText(By.name("firstname"));
+        String lastName = getLocatorText(By.name("lastname"));
+        String homePhone = getLocatorText(By.name("home"));
+        String mobilePhone = getLocatorText(By.name("mobile"));
+        String workPhone = getLocatorText(By.name("work"));
+        String email = getLocatorText(By.name("email"));
+        String email2 = getLocatorText(By.name("email2"));
+        String email3 = getLocatorText(By.name("email3"));
+        String address = getLocatorText(By.name("address"));
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstName(firstName).withLastName(lastName)
+                .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone)
+                .withEmail(email).withEmail2(email2).withEmail3(email3).withAddress(address);
     }
 }
