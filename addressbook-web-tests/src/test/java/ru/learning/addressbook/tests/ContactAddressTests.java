@@ -19,12 +19,12 @@ public class ContactAddressTests extends TestBase{
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void testContactAddress() {
         app.goTo().homePage();
         ContactData contact = app.contact().set().iterator().next();
         ContactData addressFromEditForm = app.contact().infoFromEditForm(contact);
 
-        assertThat(contact.getAllPhones(), equalTo(addressFromEditForm.getAddress()));
+        assertThat(contact.getAddress(), equalTo(addressFromEditForm.getAddress()));
     }
 }
