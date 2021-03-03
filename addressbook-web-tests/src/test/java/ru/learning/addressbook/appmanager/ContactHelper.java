@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.learning.addressbook.model.ContactData;
 import ru.learning.addressbook.model.ContactSet;
+import ru.learning.addressbook.model.GroupSet;
 
 import java.util.List;
 
@@ -70,25 +71,34 @@ public class ContactHelper extends HelperBase {
         initContactCreation();
         fillContactForm(contactData, create);
         submitContactCreation();
+		contactCache = null;
     }
 
     public void modify(ContactData contact, boolean create) {
         initContactModificationById(contact.getId());
         fillContactForm(contact, create);
         submitContactModification();
+		contactCache = null;
     }
 
     public void delete(ContactData contact) {
         selectContactById(contact.getId());
         deleteSelectedContacts();
+		contactCache = null;
     }
 
     public boolean whereContact() {
         return isElementPresent(By.name("selected[]"));
     }
 
+    private ContactSet contactCache = null;
+
     public ContactSet set() {
-        ContactSet contactSet = new ContactSet();
+		if (contactCache != null) {
+            return new ContactSet(contactCache); //создаётся копия кэша
+        }
+		
+        contactCache = new ContactSet();
         List<WebElement> rows = wd.findElements(By.xpath("//table[@id='maintable']//tr"));
 
         //проходим по всем строкам таблицы, исключая строку заголовка, поэтому счётчик начинается с 1
@@ -100,11 +110,10 @@ public class ContactHelper extends HelperBase {
             String allPhones = cells.get(5).getText(); //в 6-й ячейке телефоны
             String allEmails = cells.get(4).getText(); //в 5-й ячейке емейлы
             String address = cells.get(3).getText(); //в 4-й ячейке адрес
-            contactSet.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName)
+            contactCache.add(new ContactData().withId(id).withFirstName(firstName).withLastName(lastName)
                     .withAllPhones(allPhones).withAllEmails(allEmails).withAddress(address));
         }
-
-        return contactSet;
+        return new ContactSet(contactCache);
     }
 
     public ContactData infoFromEditForm(ContactData contact) {

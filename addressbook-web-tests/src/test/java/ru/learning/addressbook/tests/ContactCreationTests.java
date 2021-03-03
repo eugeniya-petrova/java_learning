@@ -13,7 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testContactCreation() throws Exception {
         ContactSet before = app.contact().set();
         ContactData contact = new ContactData()

@@ -56,6 +56,7 @@ public class GroupHelper extends HelperBase {
         initGroupCreation();
         fillGroupForm(groupData);
         submitGroupCreation();
+        groupCache = null;
         returnToGroupPage();
     }
 
@@ -64,25 +65,32 @@ public class GroupHelper extends HelperBase {
         initGroupModification();
         fillGroupForm(group);
         submitGroupModification();
+        groupCache = null;
         returnToGroupPage();
     }
 
     public void delete(GroupData group) {
         selectGroupById(group.getId());
         deleteSelectedGroups();
+        groupCache = null;
         returnToGroupPage();
     }
 
+    private GroupSet groupCache = null;
+
     public GroupSet set() {
-        GroupSet groupSet = new GroupSet();
+        if (groupCache != null) {
+            return new GroupSet(groupCache); //создаётся копия кэша
+        }
+
+        groupCache = new GroupSet();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
 
         for (WebElement element : elements) {
             String name = element.getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            groupSet.add(new GroupData().withId(id).withName(name));
+            groupCache.add(new GroupData().withId(id).withName(name));
         }
-
-        return groupSet;
+        return new GroupSet(groupCache); //создаётся копия кэша
     }
 }
