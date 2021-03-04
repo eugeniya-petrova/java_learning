@@ -22,14 +22,14 @@ public class GroupModificationTests extends TestBase {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void testGroupModification() {
         GroupSet before = app.group().set();
         GroupData modifiedGroup = before.iterator().next();
         GroupData group = new GroupData().withId(modifiedGroup.getId()).withName("Group модиф").withHeader("Group модиф");
         app.group().modify(group);
+        assertThat(app.group().count(), equalTo(before.size()));// сравниваем количество групп до и после
         GroupSet after = app.group().set();
-        assertThat(after.size(), equalTo(before.size()));
         assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
     }
 }

@@ -13,15 +13,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testContactCreation() throws Exception {
         ContactSet before = app.contact().set();
         ContactData contact = new ContactData()
-                .withFirstName("Пьетро").withLastName("Пепе").withAddress("адрес 2802-01").withHomePhone("+7(495)1112233").withEmail("testcontact@test.ru").withGroup("Group модиф").withAddress2("адрес 2802-02");
+                .withFirstName("Роберто").withLastName("РОбертиньо").withAddress("адрес 0403-01").withHomePhone("+7(495)1112233").withEmail("testcontact@test.ru").withGroup("Group модиф").withAddress2("адрес 0403-02");
         app.contact().create(contact, true);
         app.goTo().homePage();
+        assertThat(app.contact().count(), equalTo(before.size() + 1));// сравниваем количество контактов до и после
         ContactSet after = app.contact().set();
-        assertThat(after.size(), equalTo(before.size() + 1));
 
         //contact.withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
         assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt()))));

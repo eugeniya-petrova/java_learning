@@ -18,7 +18,7 @@ public class ContactModificationTests extends TestBase {
         }
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testContactModification() {
         ContactSet before = app.contact().set();
         ContactData modifiedContact = before.iterator().next();
@@ -26,8 +26,8 @@ public class ContactModificationTests extends TestBase {
                 .withId(modifiedContact.getId()).withFirstName("Сомерсет модиф").withLastName("Моэм модиф").withAddress("адрес 1").withMobilePhone("+7(916)1112233").withEmail("test@test.ru").withAddress2("Адрес 2");
         app.contact().modify(contact, false);
         app.goTo().homePage();
+        assertThat(app.contact().count(), equalTo(before.size()));// сравниваем количество контактов до и после
         ContactSet after = app.contact().set();
-        assertThat(after.size(), equalTo(before.size()));
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
     }
 }

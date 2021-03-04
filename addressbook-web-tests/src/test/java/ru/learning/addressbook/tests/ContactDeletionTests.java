@@ -18,13 +18,13 @@ public class ContactDeletionTests extends TestBase {
         }
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testContactDeletion() throws Exception {
         ContactSet before = app.contact().set();
         ContactData deletedContact = before.iterator().next();
         app.contact().delete(deletedContact);
+        assertThat(app.contact().count(), equalTo(before.size() - 1));// сравниваем количество контактов до и после
         ContactSet after = app.contact().set();
-        assertThat(after.size(), equalTo(before.size() - 1));
         assertThat(after, equalTo(before.without(deletedContact)));
     }
 
