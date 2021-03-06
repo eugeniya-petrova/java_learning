@@ -23,6 +23,7 @@ public class ContactDeletionTests extends TestBase {
         ContactSet before = app.contact().set();
         ContactData deletedContact = before.iterator().next();
         app.contact().delete(deletedContact);
+		app.goTo().homePage();// принудительный переход на стартовую страницу
         assertThat(app.contact().count(), equalTo(before.size() - 1));// сравниваем количество контактов до и после
         ContactSet after = app.contact().set();
         assertThat(after, equalTo(before.without(deletedContact)));
