@@ -13,7 +13,7 @@ public class GroupCreationTests extends TestBase {
     public void testGroupCreation() throws Exception {
         app.goTo().groupPage();
         GroupSet before = app.group().set();
-        GroupData group = new GroupData().withName("Group 2802-02").withHeader("Группа 28 02").withFooter("Группа 28 02 2021");
+        GroupData group = new GroupData().withName("Group 0703-01").withHeader("Группа 0703").withFooter("Группа 07 03 2021");
         app.group().create(group);
 		assertThat(app.group().count(), equalTo(before.size() + 1));// сравниваем количество групп до и после
         GroupSet after = app.group().set();

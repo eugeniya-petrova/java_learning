@@ -17,7 +17,7 @@ public class ContactCreationTests extends TestBase {
     public void testContactCreation() throws Exception {
         ContactSet before = app.contact().set();
         ContactData contact = new ContactData()
-                .withFirstName("Роберто").withLastName("РОбертиньо").withAddress("адрес 0403-01").withHomePhone("+7(495)1112233").withEmail("testcontact@test.ru").withGroup("Group модиф").withAddress2("адрес 0403-02");
+                .withFirstName("Роберто").withLastName("РОбертиньо").withAddress("адрес 0703-01").withHomePhone("+7(495)1112233").withEmail("testcontact@test.ru").withGroup("Group модиф").withAddress2("адрес 0703-02");
         app.contact().create(contact, true);
         app.goTo().homePage();
         assertThat(app.contact().count(), equalTo(before.size() + 1));// сравниваем количество контактов до и после
