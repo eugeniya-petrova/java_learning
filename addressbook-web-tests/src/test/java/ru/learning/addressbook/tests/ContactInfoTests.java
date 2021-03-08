@@ -23,7 +23,7 @@ public class ContactInfoTests extends TestBase {
         }
     }
 
-    @Test
+    @Test(enabled = false)
     public void testContactPhones() {
         app.goTo().homePage();
         ContactData contact = app.contact().set().iterator().next();
@@ -32,7 +32,7 @@ public class ContactInfoTests extends TestBase {
         assertThat(contact.getAllPhones(), equalTo(mergePhones(phonesFromEditForm)));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testContactEmails() {
         app.goTo().homePage();
         ContactData contact = app.contact().set().iterator().next();
@@ -41,7 +41,7 @@ public class ContactInfoTests extends TestBase {
         assertThat(contact.getAllEmails(), equalTo(mergeEmails(emailsFromEditForm)));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testContactAddress() {
         app.goTo().homePage();
         ContactData contact = app.contact().set().iterator().next();

@@ -1,9 +1,12 @@
 package ru.learning.addressbook.model;
 
+import java.io.File;
+
 public class ContactData {
     private int id = 0;
     private String firstName;
     private String lastName;
+	private File photo;
     private String address;
     private String homePhone;
     private String mobilePhone;
@@ -27,6 +30,10 @@ public class ContactData {
 
     public String getLastName() {
         return lastName;
+    }
+	
+	public File getPhoto() {
+        return photo;
     }
 
     public String getAddress() {
@@ -86,6 +93,11 @@ public class ContactData {
 
     public ContactData withLastName(String lastName) {
         this.lastName = lastName;
+        return this;
+    }
+	
+	public ContactData withPhoto(File photo) {
+        this.photo = photo;
         return this;
     }
 
