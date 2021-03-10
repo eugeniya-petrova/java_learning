@@ -1,0 +1,29 @@
+[
+  {
+    "firstName": "имя 0",
+    "lastName": "фамилия 0",
+    "address": "address 1-0",
+    "homePhone": "0-0-0",
+    "email": "test-0@test.ru",
+    "group": "Group модиф",
+    "address2": "address 2-0"
+  },
+  {
+    "firstName": "имя 1",
+    "lastName": "фамилия 1",
+    "address": "address 1-1",
+    "homePhone": "1-1-1",
+    "email": "test-1@test.ru",
+    "group": "Group модиф",
+    "address2": "address 2-1"
+  },
+  {
+    "firstName": "имя 2",
+    "lastName": "фамилия 2",
+    "address": "address 1-2",
+    "homePhone": "2-2-2",
+    "email": "test-2@test.ru",
+    "group": "Group модиф",
+    "address2": "address 2-2"
+  }
+]

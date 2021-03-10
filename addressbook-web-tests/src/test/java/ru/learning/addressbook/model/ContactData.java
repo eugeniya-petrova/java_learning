@@ -1,23 +1,32 @@
 package ru.learning.addressbook.model;
 
 import java.io.File;
+import com.google.gson.annotations.Expose;
 
 public class ContactData {
     private int id = 0;
+	@Expose
     private String firstName;
+    @Expose
     private String lastName;
+    //@Expose
 	private File photo;
+    @Expose
     private String address;
+    @Expose
     private String homePhone;
     private String mobilePhone;
     private String workPhone;
     private String allPhones;
     private String fax;
+    @Expose
     private String email;
     private String email2;
     private String email3;
     private String allEmails;
+    @Expose
     private String group;
+    @Expose
     private String address2;
 
     public int getId() {
