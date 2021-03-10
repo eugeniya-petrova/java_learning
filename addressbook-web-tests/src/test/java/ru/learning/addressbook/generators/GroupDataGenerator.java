@@ -38,40 +38,40 @@ public class GroupDataGenerator {
     }
 
     private void run() throws IOException {
-        List<GroupData> groupSet = generateGroups(count);
+        List<GroupData> groups = generateGroups(count);
         if (format.equals("csv")) {
-            saveAsCsv(groupSet, new File(file));
+            saveAsCsv(groups, new File(file));
         } else if (format.equals("json")) {
-            saveAsJson(groupSet, new File(file));
+            saveAsJson(groups, new File(file));
         } else {
             System.out.println("unrecognized format" + format);
         }
 
     }
 
-    private void saveAsCsv(List<GroupData> groupSet, File file) throws IOException {
+    private void saveAsCsv(List<GroupData> groups, File file) throws IOException {
         //System.out.println(new File(".").getAbsolutePath());
         try (Writer writer = new FileWriter(file)) {
-            for (GroupData group : groupSet) {
+            for (GroupData group : groups) {
                 writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
             }
         }
     }
 
-    private void saveAsJson(List<GroupData> groupSet, File file) throws IOException {
+    private void saveAsJson(List<GroupData> groups, File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
-        String json = gson.toJson(groupSet);
+        String json = gson.toJson(groups);
         try (Writer writer = new FileWriter(file)) {
             writer.write(json);
         }
     }
 
     private List<GroupData> generateGroups(int count) {
-        List<GroupData> groupSet = new ArrayList<GroupData>();
+        List<GroupData> groups = new ArrayList<GroupData>();
         for (int i = 0; i < count; i++) {
-            groupSet.add(new GroupData().withName(String.format("test %s", i))
+            groups.add(new GroupData().withName(String.format("test %s", i))
                     .withHeader(String.format("header %s", i)).withFooter(String.format("footer %s", i)));
         }
-        return groupSet;
+        return groups;
     }
 }

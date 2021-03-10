@@ -38,21 +38,21 @@ public class ContactDataGenerator {
     }
 
     private void run() throws IOException {
-        List<ContactData> contactSet = generateContacts(count);
+        List<ContactData> contacts = generateContacts(count);
         if (format.equals("csv")) {
-            saveAsCsv(contactSet, new File(file));
+            saveAsCsv(contacts, new File(file));
         } else if (format.equals("json")) {
-            saveAsJson(contactSet, new File(file));
+            saveAsJson(contacts, new File(file));
         } else {
             System.out.println("unrecognized format" + format);
         }
 
     }
 
-    private void saveAsCsv(List<ContactData> contactSet, File file) throws IOException {
+    private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
         //System.out.println(new File(".").getAbsolutePath());
         try (Writer writer = new FileWriter(file)) {
-            for (ContactData contact : contactSet) {
+            for (ContactData contact : contacts) {
                 writer.write(String.format("%s;%s;%s;%s;%s;%s;%s;%s\n", contact.getFirstName(), contact.getLastName(),
                         contact.getPhoto().getPath(), contact.getAddress(),
                         contact.getHomePhone(), contact.getEmail(), contact.getGroup(), contact.getAddress2()));
@@ -60,22 +60,22 @@ public class ContactDataGenerator {
         }
     }
 
-    private void saveAsJson(List<ContactData> contactSet, File file) throws IOException {
+    private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
-        String json = gson.toJson(contactSet);
+        String json = gson.toJson(contacts);
         try (Writer writer = new FileWriter(file)) {
             writer.write(json);
         }
     }
 
     private List<ContactData> generateContacts(int count) {
-        List<ContactData> contactSet = new ArrayList<ContactData>();
+        List<ContactData> contacts = new ArrayList<ContactData>();
         File photo = new File("src/test/resources/robot.png");
         for (int i = 0; i < count; i++) {
-            contactSet.add(new ContactData().withFirstName(String.format("имя %s", i)).withLastName(String.format("фамилия %s", i)).withPhoto(photo)
+            contacts.add(new ContactData().withFirstName(String.format("имя %s", i)).withLastName(String.format("фамилия %s", i)).withPhoto(photo)
                     .withAddress(String.format("address 1-%s", i)).withHomePhone(String.format("%s-%s-%s", i, i, i))
                     .withEmail(String.format("test-%s@test.ru", i)).withGroup("Group модиф").withAddress2(String.format("address 2-%s", i)));
         }
-        return contactSet;
+        return contacts;
     }
 }
