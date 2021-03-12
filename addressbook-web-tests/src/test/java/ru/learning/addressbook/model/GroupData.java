@@ -1,14 +1,32 @@
 package ru.learning.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity //объявляет класс GroupData привязанным к бд
+@Table(name = "group_list")
 public class GroupData {
-    private int id = 0;
+	@Id //аннотация для Hibernate, указание, что это айди
+    @Column(name = "group_id")
+	private int id = 0;
+	
     @Expose
+	@Column(name = "group_name")
     private String name;
+	
     @Expose
+	@Column(name = "group_header")
+	@Type(type = "text") //аннотация для Hibernate, т. к. поле многострочное
     private String header;
+	
     @Expose
+	@Column(name = "group_footer")
+	@Type(type = "text") //аннотация для Hibernate, т. к. поле многострочное
     private String footer;
 
     public int getId() {
@@ -27,7 +45,7 @@ public class GroupData {
         return footer;
     }
 
-    //каждый из сеттеров ниже создаёт объект типа GroupData
+    // каждый из сеттеров ниже создаёт объект типа GroupData
     public GroupData withId(int id) {
         this.id = id;
         return this;
@@ -47,12 +65,13 @@ public class GroupData {
         this.footer = footer;
         return this;
     }
-
-    @Override
+	
+	@Override
     public String toString() {
         return "GroupData{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", name='" + name + '\'' +
+                ", header='" + header + '\'' +
                 '}';
     }
 
