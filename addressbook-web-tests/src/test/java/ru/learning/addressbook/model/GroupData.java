@@ -18,7 +18,7 @@ public class GroupData {
     @Expose
 	@Column(name = "group_name")
     private String name;
-	
+
     @Expose
 	@Column(name = "group_header")
 	@Type(type = "text") //аннотация для Hibernate, т. к. поле многострочное
@@ -65,13 +65,12 @@ public class GroupData {
         this.footer = footer;
         return this;
     }
-	
-	@Override
+
+    @Override
     public String toString() {
         return "GroupData{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", header='" + header + '\'' +
                 '}';
     }
 

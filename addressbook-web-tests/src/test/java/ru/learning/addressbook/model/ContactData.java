@@ -2,31 +2,82 @@ package ru.learning.addressbook.model;
 
 import java.io.File;
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity //объявляет класс ContactData привязанным к бд
+@Table(name = "addressbook")
 public class ContactData {
+	@Id //аннотация для Hibernate, указание, что это айди
+    @Column(name = "id")
     private int id = 0;
+	
 	@Expose
+	@Column(name = "firstname")
     private String firstName;
+	
     @Expose
+	@Column(name = "lastname")
     private String lastName;
+	
     //@Expose
-	private File photo;
+	@Column(name = "photo")
+    @Type(type = "text")
+	private String photo;
+	
     @Expose
+	@Column(name = "address")
+	@Type(type = "text") //аннотация для Hibernate, т. к. поле многострочное
     private String address;
+	
     @Expose
+	@Column(name = "home")
+	@Type(type = "text")
     private String homePhone;
+	
+	@Column(name = "mobile")
+	@Type(type = "text")
     private String mobilePhone;
+	
+	@Column(name = "work")
+	@Type(type = "text")
     private String workPhone;
+	
+	@Transient //аннотация для Hibernate
     private String allPhones;
+	
+	@Column(name = "fax")
+	@Type(type = "text")
     private String fax;
+	
     @Expose
+	@Column(name = "email")
+	@Type(type = "text")
     private String email;
+	
+	@Column(name = "email2")
+	@Type(type = "text")
     private String email2;
+	
+	@Column(name = "email3")
+	@Type(type = "text")
     private String email3;
+	
+	@Transient
     private String allEmails;
+	
     @Expose
+	@Transient
     private String group;
+	
     @Expose
+	@Column(name = "address2")
+	@Type(type = "text")
     private String address2;
 
     public int getId() {
@@ -42,7 +93,7 @@ public class ContactData {
     }
 	
 	public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public String getAddress() {
@@ -106,7 +157,7 @@ public class ContactData {
     }
 	
 	public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
