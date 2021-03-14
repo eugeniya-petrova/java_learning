@@ -35,11 +35,11 @@ public class ContactHelper extends HelperBase {
         type(By.name("email3"), contactData.getEmail3());
 
         if (create) {
-            if (contactData.getGroup() != null) {
-                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-            } else {
-                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
-            }
+            //if (contactData.getGroup() != null) {
+            //    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            //} else {
+            //    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
+            //}
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }

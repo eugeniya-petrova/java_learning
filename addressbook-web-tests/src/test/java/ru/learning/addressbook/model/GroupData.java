@@ -2,11 +2,16 @@ package ru.learning.addressbook.model;
 
 import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.Type;
+import ru.learning.addressbook.model.ContactData;
+import ru.learning.addressbook.model.ContactSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.ManyToMany;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity //объявляет класс GroupData привязанным к бд
 @Table(name = "group_list")
@@ -28,6 +33,9 @@ public class GroupData {
 	@Column(name = "group_footer")
 	@Type(type = "text") //аннотация для Hibernate, т. к. поле многострочное
     private String footer;
+	
+	@ManyToMany(mappedBy = "groupSet")
+	private Set<ContactData> contactSet = new HashSet<ContactData>();
 
     public int getId() {
         return id;
@@ -43,6 +51,10 @@ public class GroupData {
 
     public String getFooter() {
         return footer;
+    }
+	
+	public ContactSet getContactSet() {
+        return new ContactSet(contactSet);
     }
 
     // каждый из сеттеров ниже создаёт объект типа GroupData

@@ -3,12 +3,12 @@ package ru.learning.addressbook.model;
 import java.io.File;
 import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.Type;
+import ru.learning.addressbook.model.GroupData;
+import ru.learning.addressbook.model.GroupSet;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity //объявляет класс ContactData привязанным к бд
 @Table(name = "addressbook")
@@ -71,9 +71,16 @@ public class ContactData {
 	@Transient
     private String allEmails;
 	
+	/*
     @Expose
 	@Transient
     private String group;
+	*/
+	
+	@ManyToMany(fetch = FetchType.EAGER) //извлечение как можно большего количества инф-ции из бд за один заход
+	@JoinTable(name = "address_in_groups", 
+	    joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+	private Set<GroupData> groupSet = new HashSet<GroupData>();
 	
     @Expose
 	@Column(name = "address2")
@@ -132,8 +139,14 @@ public class ContactData {
 
     public String getAllEmails() { return allEmails; }
 
+    /*
     public String getGroup() {
         return group;
+    }
+	*/
+	
+	public GroupSet getGroupSet() {
+        return new GroupSet(groupSet);
     }
 
     public String getAddress2() {
@@ -211,10 +224,12 @@ public class ContactData {
         return this;
     }
 
+    /*
     public ContactData withGroup(String group) {
         this.group = group;
         return this;
     }
+	*/
 
     public ContactData withAddress2(String address2) {
         this.address2 = address2;
