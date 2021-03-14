@@ -49,18 +49,20 @@ public class GroupCreationTests extends TestBase {
         }
     }
 
-    //@Test(dataProvider = "validGroupsFromJson")
-	@Test(enabled = false)
+    @Test(dataProvider = "validGroupsFromJson")
+	//@Test(enabled = false)
     public void testGroupCreation(GroupData group) throws Exception {
         app.goTo().groupPage();
-        GroupSet before = app.group().set();
+        GroupSet before = app.db().groupSet();
         app.group().create(group);
-        assertThat(app.group().count(), equalTo(before.size() + 1));// сравниваем количество групп до и после
-        GroupSet after = app.group().set();
+        assertThat(app.group().count(), equalTo(before.size() + 1)); //сравниваем количество групп до и после
+        GroupSet after = app.db().groupSet();
 
         //group.withId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
         assertThat(after, equalTo(
                 before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+				
+		verifyGroupListInUI();
     }
 
 }
