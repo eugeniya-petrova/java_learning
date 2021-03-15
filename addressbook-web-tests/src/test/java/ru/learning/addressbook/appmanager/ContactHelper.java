@@ -8,6 +8,7 @@ import org.testng.Assert;
 import ru.learning.addressbook.model.ContactData;
 import ru.learning.addressbook.model.ContactSet;
 import ru.learning.addressbook.model.GroupSet;
+import ru.learning.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -35,11 +36,14 @@ public class ContactHelper extends HelperBase {
         type(By.name("email3"), contactData.getEmail3());
 
         if (create) {
-            //if (contactData.getGroup() != null) {
-            //    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-            //} else {
-            //    new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("[none]");
-            //}
+			//проверка, что именно передано во входных данных в тесте!
+			//если не передано ни одной группы - не добавляем контакт никуда
+			//если передана одна группа - пытаемся выбрать её из выпадающего списка
+			//если передано больше одной группы - это невалидные ТД
+            if (contactData.getGroupSet().size() > 0) {
+				Assert.assertTrue(contactData.getGroupSet().size() == 1);
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroupSet().iterator().next().getName());
+            } 
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
@@ -67,6 +71,29 @@ public class ContactHelper extends HelperBase {
     public void submitContactModification() {
         click(By.name("update"));
     }
+	
+	//выбор группы, в которую хотим добавить контакт
+	public void selectTargetGroupById(int id) {
+		new Select(wd.findElement(By.name("to_group"))).selectByValue(String.format("%s", id));
+	}
+	
+	//выбор группы, из которой хотим удалить контакт
+	public void selectParentGroupById(int id) {
+		new Select(wd.findElement(By.name("group"))).selectByValue(String.format("%s", id));
+	}
+	
+	public void submitContactAdditionToGroup() {
+		click(By.name("add"));
+	}
+	
+	public void submitContactRemovingFromGroup() {
+		click(By.name("remove"));
+	}
+
+	//переход на страницу конкретной группы
+    public void goToSelectedGroupPage(int id) {
+        wd.findElement(By.cssSelector(String.format("a[href='./?group=%s']", id))).click();
+    }
 
     public void create(ContactData contactData, boolean create) {
         initContactCreation();
@@ -87,6 +114,22 @@ public class ContactHelper extends HelperBase {
         deleteSelectedContacts();
 		contactCache = null;
     }
+	
+	public void addToGroup(ContactData contact, GroupData group) {
+		selectContactById(contact.getId());
+		selectTargetGroupById(group.getId());
+		submitContactAdditionToGroup();
+		contactCache = null;
+        goToSelectedGroupPage(group.getId());
+	}
+	
+	public void removeFromGroup(ContactData contact, GroupData group) {
+		selectParentGroupById(group.getId());
+		selectContactById(contact.getId());
+		submitContactRemovingFromGroup();
+		contactCache = null;
+        goToSelectedGroupPage(group.getId());
+	}
 
     public boolean whereContact() {
         return isElementPresent(By.name("selected[]"));

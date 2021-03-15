@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1" verbose="1" >
+    <test name="ContactInGroup" >
+        <classes>
+            <class name="ru.learning.addressbook.tests.ContactAdditionToGroupTests" />
+            <class name="ru.learning.addressbook.tests.ContactRemovalFromGroupTests" />
+        </classes>
+    </test>
+</suite>

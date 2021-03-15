@@ -2,10 +2,13 @@ package ru.learning.addressbook.tests;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.learning.addressbook.model.ContactData;
 import ru.learning.addressbook.model.ContactSet;
+import ru.learning.addressbook.model.GroupData;
+import ru.learning.addressbook.model.GroupSet;
 
 import java.io.*;
 import java.util.Iterator;
@@ -17,6 +20,15 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTests extends TestBase {
+	
+	@BeforeMethod
+    public void checkPreconditions() {
+        if (app.db().groupSet().size() == 0) {
+			app.goTo().groupPage();
+            app.group().create(new GroupData().withName("for contact add"));
+			app.goTo().homePage(); //переход на страницу с контактами
+        }
+    }
 
     @DataProvider
     public Iterator<Object[]> validContactsFromCsv() throws IOException {
@@ -54,8 +66,9 @@ public class ContactCreationTests extends TestBase {
 
     @Test(dataProvider = "validContactsFromJson")
     public void testContactCreation(ContactData contact) throws Exception {
+		GroupSet groupSet = app.db().groupSet();
         ContactSet before = app.db().contactSet();
-        app.contact().create(contact, true);
+        app.contact().create(contact.inGroup(groupSet.iterator().next()), true);
         app.goTo().homePage();
         assertThat(app.contact().count(), equalTo(before.size() + 1));// сравниваем количество контактов до и после
         ContactSet after = app.db().contactSet();

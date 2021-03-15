@@ -230,6 +230,12 @@ public class ContactData {
         return this;
     }
 	*/
+	
+	//помечаем контакт, что он добавлен в какую-то группу
+	public ContactData inGroup(GroupData group) {
+        groupSet.add(group);
+        return this;
+    }
 
     public ContactData withAddress2(String address2) {
         this.address2 = address2;
