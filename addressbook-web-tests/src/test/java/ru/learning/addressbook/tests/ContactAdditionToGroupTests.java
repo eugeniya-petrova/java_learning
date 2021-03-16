@@ -12,6 +12,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactAdditionToGroupTests extends TestBase {
 
+    ContactData contact = app.db().contactSet().iterator().next();
+
     @BeforeMethod
     public void checkPreconditions() {
         if (app.db().contactSet().size() == 0) {
@@ -25,20 +27,19 @@ public class ContactAdditionToGroupTests extends TestBase {
             app.goTo().homePage();
         }
 
-        //добавить проверку - если контакт уже добавлен во все возможные группы - создать в этом случае новую группу
-        //if (app.db().contactSet().iterator().next().getGroupSet().size() == (app.db().groupSet().size())) {
-         //   app.goTo().groupPage();
-         //   app.group().create(new GroupData().withName("one else group"));
-         //   app.goTo().homePage();
-       // }
+        if (contact.getGroupSet().size() == (app.db().groupSet().size())) { //если контакт добавлен во все группы, существующие в бд
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("one else group")); //создаём ещё одну группу
+            app.goTo().homePage();
+        }
 
     }
 
     @Test(enabled = true)
     public void testContactAdditionToGroup() {
-        ContactData contact = app.db().contactSet().iterator().next();
         GroupSet groupSetBefore = contact.getGroupSet();
-        GroupData targetGroup = app.db().groupSet().iterator().next();
+       // GroupData targetGroup = app.db().groupSet().iterator().next();
+        GroupData targetGroup = app.db().groupSet().stream().max((g1, g2) -> Integer.compare(g1.getId(), g2.getId())).get();
         ContactSet contactSetBefore = targetGroup.getContactSet();
         app.contact().addToGroup(contact, targetGroup);
 
@@ -47,6 +48,5 @@ public class ContactAdditionToGroupTests extends TestBase {
         ContactSet contactSetAfter = app.db().groupById(targetGroup.getId()).getContactSet(); //по id получаем из бд группу, в которую добавили контакт, получаем её список контактов
         assertThat(groupSetAfter, equalTo(groupSetBefore.withAdded(targetGroup)));
         assertThat(contactSetAfter, equalTo(contactSetBefore.withAdded(contact)));
-        //verifyContactListInUI();
     }
 }

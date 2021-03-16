@@ -1,6 +1,7 @@
 package ru.learning.addressbook.tests;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.learning.addressbook.model.ContactData;
 import ru.learning.addressbook.model.ContactSet;
@@ -12,7 +13,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactRemovalFromGroupTests extends TestBase {
 
+    ContactData contact = app.db().contactSet().iterator().next();
+
     @BeforeMethod
+    //@DataProvider
     public void checkPreconditions() {
         if (app.db().groupSet().size() == 0) {
             app.goTo().groupPage();
@@ -25,13 +29,15 @@ public class ContactRemovalFromGroupTests extends TestBase {
             app.goTo().homePage();
         }
 
-        //добавить ещё проверку, если контакт есть, но он не добавлен ни в какую группу - предварительно добавить
-        //if (app.db().contactSet().iterator().next().getGroupSet().size() == 0) {app.contact().addToGroup(contact, someGroup)}
+        if (contact.getGroupSet().size() == 0) { //если контакт не связан ни с какой группой
+            app.goTo().homePage();
+            app.contact().addToGroup(contact, app.db().groupSet().iterator().next()); //предварительно добавляем контакт в любую группу
+        }
+
     }
 
-    @Test(enabled = true)
+    @Test
     public void testContactRemovalFromGroup() {
-        ContactData contact = app.db().contactSet().iterator().next();
         GroupSet groupSetBefore = contact.getGroupSet();
         GroupData parentGroup = groupSetBefore.iterator().next();
         ContactSet contactSetBefore = parentGroup.getContactSet();
@@ -42,6 +48,5 @@ public class ContactRemovalFromGroupTests extends TestBase {
         ContactSet contactSetAfter = app.db().groupById(parentGroup.getId()).getContactSet(); //по id получаем из бд группу, из которой удалялся контакт, получаем её список контактов
         assertThat(groupSetAfter, equalTo(groupSetBefore.without(parentGroup)));
         assertThat(contactSetAfter, equalTo(contactSetBefore.without(contact)));
-        //verifyContactListInUI();
     }
 }
