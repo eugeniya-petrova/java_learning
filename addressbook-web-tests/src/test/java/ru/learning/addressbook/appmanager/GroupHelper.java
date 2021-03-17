@@ -101,10 +101,10 @@ public class GroupHelper extends HelperBase {
     }
 
     //метод возвращает разницу между двумя наборами групп
-    public Set<GroupData> diffGroupSets(GroupSet groupSet1, GroupSet groupSet2) {
+    public GroupSet diffGroupSets(GroupSet groupSet1, GroupSet groupSet2) {
 
-        Set<GroupData> set1 = new HashSet<GroupData>(groupSet1);
-        Set<GroupData> set2 = new HashSet<GroupData>(groupSet2);
+        GroupSet set1 = new GroupSet(groupSet1);
+        GroupSet set2 = new GroupSet(groupSet2);
         set1.removeAll(set2);
         return set1;
     }
