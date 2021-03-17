@@ -23,13 +23,13 @@ public class ContactRemovalFromGroupTests extends TestBase {
         }
 
         if (app.db().contactSet().size() == 0) {
-            app.contact().create(new ContactData().withFirstName("for remove").inGroup(app.db().groupSet().iterator().next()), true);
+            app.contact().create(new ContactData().withFirstName("for remove"), true);
             app.goTo().homePage();
         }
 
     }
 
-    @Test
+    @Test(enabled = true)
     public void testContactRemovalFromGroup() {
 		
 		ContactData contact = app.db().contactSet().iterator().next();
