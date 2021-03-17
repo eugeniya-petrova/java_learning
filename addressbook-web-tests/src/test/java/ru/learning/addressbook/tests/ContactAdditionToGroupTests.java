@@ -35,14 +35,14 @@ public class ContactAdditionToGroupTests extends TestBase {
         ContactData contact = app.db().contactSet().iterator().next();
         GroupSet groupSetBefore = contact.getGroupSet();
 
-        if (groupSetBefore.size() == (app.db().groupSet().size())) { //если контакт добавлен во все группы, существующие в бд
+        if (groupSetBefore.size() == app.db().groupSet().size()) { //если контакт добавлен во все группы, существующие в бд
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("one else group")); //создаём ещё одну группу
             app.goTo().homePage();
         }
 
         //получаем разницу между списком всех групп в бд и списком групп, в которые уже добавлен контакт - это те группы, в которые контакт можно добавить
-        Set<GroupData> groupSet = app.group().diffGroupSets(app.db().groupSet(), groupSetBefore);
+        GroupSet groupSet = app.group().diffGroupSets(app.db().groupSet(), groupSetBefore);
         GroupData targetGroup = groupSet.iterator().next();
         ContactSet contactSetBefore = targetGroup.getContactSet(); //получаем список контактов той группы, в которую будем добавлять
         app.goTo().homePage();
@@ -53,6 +53,8 @@ public class ContactAdditionToGroupTests extends TestBase {
         ContactSet contactSetAfter = app.db().groupById(targetGroup.getId()).getContactSet(); //по id получаем из бд группу, в которую добавили контакт, получаем её список контактов
         assertThat(groupSetAfter, equalTo(groupSetBefore.withAdded(targetGroup)));
         assertThat(contactSetAfter, equalTo(contactSetBefore.withAdded(contact)));
+		
+		verifyContactsInGroupUI(targetGroup);
     }
 
 }

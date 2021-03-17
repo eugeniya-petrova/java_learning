@@ -50,5 +50,7 @@ public class ContactRemovalFromGroupTests extends TestBase {
         ContactSet contactSetAfter = app.db().groupById(parentGroup.getId()).getContactSet(); //по id получаем из бд группу, из которой удалялся контакт, получаем её список контактов
         assertThat(groupSetAfter, equalTo(groupSetBefore.without(parentGroup)));
         assertThat(contactSetAfter, equalTo(contactSetBefore.without(contact)));
+		
+		verifyContactsInGroupUI(parentGroup);
     }
 }

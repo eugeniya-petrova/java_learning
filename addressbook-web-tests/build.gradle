@@ -54,6 +54,9 @@ task testContactInGroup(type: Test) {
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
+	if (project.hasProperty('verifyUI')) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
 }
 
 tasks.withType(JavaCompile) {

@@ -49,5 +49,17 @@ public class TestBase {
                     .collect(Collectors.toSet())));
         }
     }
+	
+	public void verifyContactsInGroupUI(GroupData group) {
+        //проверка, что указано системное свойство verifyUI - по умолчанию false (без проверки)
+        if (Boolean.getBoolean("verifyUI")) {
+            ContactSet dbContactSet = app.db().groupById(group.getId()).getContactSet();
+            ContactSet uiContactSet = app.contact().set();
+            assertThat(uiContactSet, equalTo(dbContactSet.stream()
+                    .map((c) -> new ContactData().withId(c.getId()).withFirstName(c.getFirstName()).withLastName(c.getLastName())
+                            .withAllPhones(c.getAllPhones()).withAllEmails(c.getAllEmails()).withAddress(c.getAddress()))
+                    .collect(Collectors.toSet())));
+        }
+    }
 
 }
