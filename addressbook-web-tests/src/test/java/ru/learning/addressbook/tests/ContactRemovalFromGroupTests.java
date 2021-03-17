@@ -13,8 +13,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactRemovalFromGroupTests extends TestBase {
 
-    ContactData contact = app.db().contactSet().iterator().next();
-
     @BeforeMethod
     //@DataProvider
     public void checkPreconditions() {
@@ -29,18 +27,22 @@ public class ContactRemovalFromGroupTests extends TestBase {
             app.goTo().homePage();
         }
 
-        if (contact.getGroupSet().size() == 0) { //если контакт не связан ни с какой группой
-            app.goTo().homePage();
-            app.contact().addToGroup(contact, app.db().groupSet().iterator().next()); //предварительно добавляем контакт в любую группу
-        }
-
     }
 
     @Test
     public void testContactRemovalFromGroup() {
-        GroupSet groupSetBefore = contact.getGroupSet();
+		
+		ContactData contact = app.db().contactSet().iterator().next();
+		
+		if (contact.getGroupSet().size() == 0) { //если контакт не связан ни с какой группой
+            app.goTo().homePage();
+            app.contact().addToGroup(contact, app.db().groupSet().iterator().next()); //предварительно добавляем контакт в любую группу
+        }
+		
+        GroupSet groupSetBefore = app.db().contactById(contact.getId()).getGroupSet(); //по id заново получаем из бд контакт, получаем список его групп
         GroupData parentGroup = groupSetBefore.iterator().next();
-        ContactSet contactSetBefore = parentGroup.getContactSet();
+        ContactSet contactSetBefore = parentGroup.getContactSet(); //получаем список контактов той группы, из которой будем удалять
+		app.goTo().homePage();
         app.contact().removeFromGroup(contact, parentGroup);
 
         assertThat(app.contact().count(), equalTo(contactSetBefore.size() - 1)); //сравниваем количество контактов в конкретной группе до и после

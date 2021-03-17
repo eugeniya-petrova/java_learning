@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import ru.learning.addressbook.model.GroupData;
 import ru.learning.addressbook.model.GroupSet;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GroupHelper extends HelperBase {
 
@@ -97,4 +99,14 @@ public class GroupHelper extends HelperBase {
         }
         return new GroupSet(groupCache); //создаётся копия кэша
     }
+
+    //метод возвращает разницу между двумя наборами групп
+    public Set<GroupData> diffGroupSets(GroupSet groupSet1, GroupSet groupSet2) {
+
+        Set<GroupData> set1 = new HashSet<GroupData>(groupSet1);
+        Set<GroupData> set2 = new HashSet<GroupData>(groupSet2);
+        set1.removeAll(set2);
+        return set1;
+    }
+
 }
