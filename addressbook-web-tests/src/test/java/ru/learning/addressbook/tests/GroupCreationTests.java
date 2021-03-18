@@ -7,10 +7,13 @@ import org.testng.annotations.Test;
 import ru.learning.addressbook.model.GroupData;
 import ru.learning.addressbook.model.GroupSet;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -50,7 +53,6 @@ public class GroupCreationTests extends TestBase {
     }
 
     @Test(dataProvider = "validGroupsFromJson")
-	//@Test(enabled = false)
     public void testGroupCreation(GroupData group) throws Exception {
         app.goTo().groupPage();
         GroupSet before = app.db().groupSet();

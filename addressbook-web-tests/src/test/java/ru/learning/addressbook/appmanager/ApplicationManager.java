@@ -40,7 +40,7 @@ public class ApplicationManager {
             wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         } else if (browser.equals(BrowserType.CHROME)) {
             wd = new ChromeDriver();
-            wd.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+            wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         }
 
         wd.get(properties.getProperty("web.baseURL"));

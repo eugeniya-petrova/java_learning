@@ -29,7 +29,7 @@ public class ContactRemovalFromGroupTests extends TestBase {
 
     }
 
-    @Test
+    @Test(enabled = true)
     public void testContactRemovalFromGroup() {
 		
 		ContactData contact = app.db().contactSet().iterator().next();
