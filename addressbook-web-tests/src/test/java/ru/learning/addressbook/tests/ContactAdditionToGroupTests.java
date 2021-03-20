@@ -7,8 +7,6 @@ import ru.learning.addressbook.model.ContactSet;
 import ru.learning.addressbook.model.GroupData;
 import ru.learning.addressbook.model.GroupSet;
 
-import java.util.*;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -32,19 +30,36 @@ public class ContactAdditionToGroupTests extends TestBase {
     @Test(enabled = true)
     public void testContactAdditionToGroup() {
 
-        ContactData contact = app.db().contactSet().iterator().next();
-        GroupSet groupSetBefore = contact.getGroupSet();
-
-        if (groupSetBefore.size() == app.db().groupSet().size()) { //если контакт добавлен во все группы, существующие в бд
+        ContactData contact; // контакт, который будем добавлять
+		GroupSet groupSetBefore; //набор групп этого контакта
+		GroupData targetGroup; //группа, в которую будем добавлять
+		ContactSet contactSetBefore; //набор контактов этой группы
+		
+		ContactSet contactSet = app.db().contactSet(); //все контакты в бд
+		ContactSet contactsNotInAllGroups = new ContactSet();
+		
+		//ищем контакты, которые добавлены не во все группы
+		for (ContactData c : contactSet) {
+			if (c.getGroupSet().size() < app.db().groupSet().size()) {
+				contactsNotInAllGroups = contactsNotInAllGroups.withAdded(c);
+			}
+		}
+		
+		if (contactsNotInAllGroups.size() == 0) { //если все контакты добавлены во все группы, существующие в бд
+		    contact = app.db().contactSet().iterator().next();
             app.goTo().groupPage();
             app.group().create(new GroupData().withName("one else group")); //создаём ещё одну группу
-            app.goTo().homePage();
-        }
+            //app.goTo().homePage();
+        } else {
+			contact = contactsNotInAllGroups.iterator().next();
+		}
 
+        groupSetBefore = contact.getGroupSet();
+		
         //получаем разницу между списком всех групп в бд и списком групп, в которые уже добавлен контакт - это те группы, в которые контакт можно добавить
         GroupSet groupSet = app.group().diffGroupSets(app.db().groupSet(), groupSetBefore);
-        GroupData targetGroup = groupSet.iterator().next();
-        ContactSet contactSetBefore = targetGroup.getContactSet(); //получаем список контактов той группы, в которую будем добавлять
+        targetGroup = groupSet.iterator().next();
+        contactSetBefore = targetGroup.getContactSet(); //получаем список контактов той группы, в которую будем добавлять
         app.goTo().homePage();
         app.contact().addToGroup(contact, targetGroup);
 
