@@ -15,7 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
 	private final Properties properties;
-    WebDriver wd;
+    private WebDriver wd;
+	private RegistrationHelper registrationHelper;
 
     private String browser;
 
@@ -27,8 +28,23 @@ public class ApplicationManager {
     public void init() throws IOException {
 		String target = System.getProperty("target", "local");
 		properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-		
-        if (browser.equals(BrowserType.FIREFOX)) {
+    }
+
+    public void stop() {
+		if (wd != null) { //останавливаем драйвер, только если он был проинициализирован
+			wd.quit();
+		}
+    }
+	
+	//позволяет помощникам получать у ApplicationManager системные свойства
+	public String getProperty(String key) {
+		return properties.getProperty(key);
+	}
+	
+	//метод инициализирует драйвер в момент первого обращения
+	public WebDriver getDriver() {
+		if (wd == null) { //если драйвер ещё не проинициализирован, нужно его проинициализировать
+			if (browser.equals(BrowserType.FIREFOX)) {
             wd = new FirefoxDriver();
             wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         } else if (browser.equals(BrowserType.CHROME)) {
@@ -37,11 +53,23 @@ public class ApplicationManager {
         }
 
         wd.get(properties.getProperty("web.baseURL"));
-    }
-
-    public void stop() {
-        wd.quit();
-    }
+		
+		}
+		return wd;
+	}
+	
+	//вызов помощника HttpSession
+	public HttpSession newSession() {
+		return new HttpSession(this);
+	}
+	
+	//вызов помощника RegistrationHelper
+	public RegistrationHelper registration() {
+		if (registrationHelper == null) { //если метод registration() ещё ни разу не дёргали, инициализируем новый RegistrationHelper
+			registrationHelper = new RegistrationHelper(this);
+		}
+		return registrationHelper;
+	}
 
     private boolean isElementPresent(By by) {
         try {
