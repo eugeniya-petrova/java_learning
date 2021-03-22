@@ -17,6 +17,9 @@ public class ApplicationManager {
 	private final Properties properties;
     private WebDriver wd;
 	private RegistrationHelper registrationHelper;
+	private PasswordHelper passwordHelper;
+	private MailHelper mailHelper;
+    private DbHelper dbHelper;
 
     private String browser;
 
@@ -28,6 +31,7 @@ public class ApplicationManager {
     public void init() throws IOException {
 		String target = System.getProperty("target", "local");
 		properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+        dbHelper = new DbHelper();
     }
 
     public void stop() {
@@ -70,6 +74,26 @@ public class ApplicationManager {
 		}
 		return registrationHelper;
 	}
+	
+	//вызов помощника PasswordHelper
+	public PasswordHelper changePassword() {
+		if (passwordHelper == null) { //если метод changePassword() ещё ни разу не дёргали, инициализируем новый PasswordHelper
+			passwordHelper = new PasswordHelper(this);
+		}
+		return passwordHelper;
+	}
+	
+	//вызов помощника MailHelper
+	public MailHelper mail() {
+		if (mailHelper == null) { //если метод mail() ещё ни разу не дёргали, инициализируем новый MailHelper
+			mailHelper = new MailHelper(this);
+		}
+		return mailHelper;
+	}
+
+    public DbHelper db() {
+        return dbHelper;
+    }
 
     private boolean isElementPresent(By by) {
         try {
