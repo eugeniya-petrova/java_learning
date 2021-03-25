@@ -19,7 +19,7 @@ public class RegistrationTests extends TestBase {
         app.mail().start();
     }
 
-    @Test
+    @Test(enabled = false)
     public void testRegistration() throws IOException, MessagingException {
         String user = "user1";
         String password = "password";

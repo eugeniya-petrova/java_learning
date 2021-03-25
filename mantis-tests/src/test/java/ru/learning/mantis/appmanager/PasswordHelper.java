@@ -11,7 +11,10 @@ public class PasswordHelper extends HelperBase {
 
     public void start(UserData user) {
         adminLogin();
-        searchUser(user);
+        //searchUser(user);
+		goToManagePage();
+		goToUserPage();
+		selectUserById(user);
         initResetPassword();
     }
 
@@ -31,13 +34,35 @@ public class PasswordHelper extends HelperBase {
         click(By.cssSelector("input[type='submit']"));
     }
 
+/*
     public void searchUser(UserData user) {
         wd.findElement(By.cssSelector("a[href='/mantisbt-2.25.0/manage_overview_page.php']")).click();
-        wd.findElement(By.cssSelector("a[href='/mantisbt-2.25.0/manage_user_page.php']")).click();
+		wd.findElement(By.cssSelector("a[href='/mantisbt-2.25.0/manage_user_page.php']")).click();
         wd.findElement(By.cssSelector(String.format("a[href='/mantisbt-2.25.0/manage_user_page.php?user_id=%s']", user.getId()))).click();
     }
+	*/
 
     public void initResetPassword() {
         click(By.xpath("//form[@id='manage-user-reset-form']//input[@type='submit']"));
     }
+	
+	public void goToManagePage() {
+		if (isElementPresent(By.cssSelector("a[href='/mantisbt-2.25.0/manage_user_page.php']"))) {
+			return;
+		} else {
+			wd.findElement(By.cssSelector("a[href='/mantisbt-2.25.0/manage_overview_page.php']")).click();
+		}
+	}
+	
+	public void goToUserPage() {
+		if (isElementPresent(By.cssSelector("span[class='badge']"))) {
+			return;
+		} else {
+			wd.findElement(By.cssSelector("a[href='/mantisbt-2.25.0/manage_user_page.php']")).click();
+		}
+	}
+	
+	public void selectUserById(UserData user) {
+		wd.findElement(By.cssSelector(String.format("a[href='manage_user_edit_page.php?user_id=%s']", user.getId()))).click();
+	}
 }
