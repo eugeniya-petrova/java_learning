@@ -19,6 +19,7 @@ public class ApplicationManager {
 	private RegistrationHelper registrationHelper;
 	private PasswordHelper passwordHelper;
 	private MailHelper mailHelper;
+	private SoapHelper soapHelper;
     private DbHelper dbHelper;
 
     private String browser;
@@ -89,6 +90,14 @@ public class ApplicationManager {
 			mailHelper = new MailHelper(this);
 		}
 		return mailHelper;
+	}
+
+	//вызов помощника SoapHelper
+	public SoapHelper soap() {
+		if (soapHelper == null) { //если метод soap() ещё ни разу не дёргали, инициализируем новый SoapHelper
+			soapHelper = new SoapHelper(this);
+		}
+		return soapHelper;
 	}
 
     public DbHelper db() {
