@@ -28,7 +28,7 @@ public class Issue {
         return status;
     }
 	
-	 public Issue withId(int id) {
+	public Issue withId(int id) {
         this.id = id;
         return this;
     }
