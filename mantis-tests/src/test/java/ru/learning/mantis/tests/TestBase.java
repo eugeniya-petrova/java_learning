@@ -1,9 +1,14 @@
 package ru.learning.mantis.tests;
 
 import org.openqa.selenium.remote.BrowserType;
+import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.learning.mantis.appmanager.ApplicationManager;
+
+import javax.xml.rpc.ServiceException;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 
 public class TestBase {
 
@@ -18,5 +23,20 @@ public class TestBase {
     public void tearDown() throws Exception {
         app.stop();
     }
+
+
+	public boolean isIssueOpen(int issueId) throws MalformedURLException, ServiceException, RemoteException {
+        if (app.soap().getIssueStatus(issueId).equals("resolved")) {
+            return false;
+        } else {
+            return true;
+        }
+	}
+	
+	public void skipIfNotFixed(int issueId) throws MalformedURLException, ServiceException, RemoteException {
+		if (isIssueOpen(issueId)) {
+			throw new SkipException("Ignored because of issue " + issueId);
+		}
+	}
 
 }
