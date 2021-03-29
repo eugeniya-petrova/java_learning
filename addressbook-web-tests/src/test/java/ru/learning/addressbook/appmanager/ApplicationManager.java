@@ -56,6 +56,11 @@ public class ApplicationManager {
         sessionHelper.logout();
         wd.quit();
     }
+	
+	//позволяет помощникам получать у ApplicationManager системные свойства
+	public String getProperty(String key) {
+		return properties.getProperty(key);
+	}
 
     private boolean isElementPresent(By by) {
         try {

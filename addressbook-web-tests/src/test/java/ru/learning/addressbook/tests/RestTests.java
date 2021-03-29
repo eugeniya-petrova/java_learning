@@ -31,10 +31,8 @@ public class RestTests extends TestBase{
 
     @Test
     public void testGetIssueStateNameById() throws IOException {
-        String stateName = app.rest().getIssueStateNameById(761);
+        String stateName = app.rest().getIssueStateNameById(760);
         System.out.println(stateName);
     }
-
-
 
 }
