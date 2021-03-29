@@ -12,6 +12,8 @@ import ru.learning.addressbook.model.Issue;
 import java.io.IOException;
 import java.util.Set;
 
+import static com.google.gson.JsonParser.parseString;
+
 public class RestHelper {
 
     private ApplicationManager app;
@@ -22,7 +24,7 @@ public class RestHelper {
 
     public Set<Issue> getIssues() throws IOException {
         String json = getExecutor().execute(Request.Get(app.getProperty("bugifyURL") + "issues.json")).returnContent().asString();
-        JsonElement parsed = new JsonParser().parse(json);
+        JsonElement parsed = parseString(json);
         JsonElement issues = parsed.getAsJsonObject().get("issues");
         return new Gson().fromJson(issues, new TypeToken<Set<Issue>>(){}.getType());
     }
@@ -31,14 +33,14 @@ public class RestHelper {
         String json = getExecutor().execute(Request.Post(app.getProperty("bugifyURL") + "issues.json")
                 .bodyForm(new BasicNameValuePair("subject", newIssue.getSubject()), new BasicNameValuePair("description", newIssue.getDescription())))
                 .returnContent().asString();
-        JsonElement parsed = new JsonParser().parse(json);
+        JsonElement parsed = parseString(json);
         return parsed.getAsJsonObject().get("issue_id").getAsInt(); //возвращаем id созданной задачи
     }
 
     public String getIssueStateNameById(int issueId) throws IOException {
         String json = getExecutor().execute(Request.Get(app.getProperty("bugifyURL") + String.format("issues/%s.json", issueId)))
                 .returnContent().asString();
-        JsonElement parsed = new JsonParser().parse(json);
+        JsonElement parsed = parseString(json);
         JsonElement issues = parsed.getAsJsonObject().get("issues");
         JsonElement line = issues.getAsJsonArray().get(0);
         return line.getAsJsonObject().get("state_name").getAsString(); //возвращаем статус задачи
