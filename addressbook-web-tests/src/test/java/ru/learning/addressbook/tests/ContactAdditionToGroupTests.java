@@ -6,6 +6,7 @@ import ru.learning.addressbook.model.ContactData;
 import ru.learning.addressbook.model.ContactSet;
 import ru.learning.addressbook.model.GroupData;
 import ru.learning.addressbook.model.GroupSet;
+import java.io.IOException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,7 +29,8 @@ public class ContactAdditionToGroupTests extends TestBase {
     }
 
     @Test(enabled = true)
-    public void testContactAdditionToGroup() {
+    public void testContactAdditionToGroup() throws IOException {
+        skipIfNotFixed(760);
 
         ContactData contact; // контакт, который будем добавлять
 		GroupSet groupSetBefore; //набор групп этого контакта

@@ -3,6 +3,7 @@ package ru.learning.addressbook.tests;
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -13,6 +14,7 @@ import ru.learning.addressbook.model.ContactSet;
 import ru.learning.addressbook.model.GroupData;
 import ru.learning.addressbook.model.GroupSet;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -77,6 +79,20 @@ public class TestBase {
                     .map((c) -> new ContactData().withId(c.getId()).withFirstName(c.getFirstName()).withLastName(c.getLastName())
                             .withAllPhones(c.getAllPhones()).withAllEmails(c.getAllEmails()).withAddress(c.getAddress()))
                     .collect(Collectors.toSet())));
+        }
+    }
+
+    public boolean isIssueOpen(int issueId) throws IOException {
+        if (app.rest().getIssueStateNameById(issueId).equals("Resolved")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void skipIfNotFixed(int issueId) throws IOException {
+        if (isIssueOpen(issueId)) {
+            throw new SkipException("Ignored because of issue " + issueId);
         }
     }
 

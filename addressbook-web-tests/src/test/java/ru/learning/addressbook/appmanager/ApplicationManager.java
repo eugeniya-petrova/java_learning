@@ -21,6 +21,7 @@ public class ApplicationManager {
     private ContactHelper contactHelper;
     private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
+    private RestHelper restHelper;
 	private DbHelper dbHelper;
     private String browser;
 
@@ -75,6 +76,14 @@ public class ApplicationManager {
 
     public ContactHelper contact() {
         return contactHelper;
+    }
+
+    //вызов помощника RestHelper
+    public RestHelper rest() {
+        if (restHelper == null) { //если метод rest() ещё ни разу не дёргали, инициализируем новый RestHelper
+            restHelper = new RestHelper(this);
+        }
+        return restHelper;
     }
 	
 	public DbHelper db() {
