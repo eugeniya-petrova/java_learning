@@ -38,7 +38,7 @@ public class PasswordHelper extends HelperBase {
     public void searchUser(UserData user) {
         wd.findElement(By.cssSelector("a[href='/mantisbt-2.25.0/manage_overview_page.php']")).click();
 		wd.findElement(By.cssSelector("a[href='/mantisbt-2.25.0/manage_user_page.php']")).click();
-        wd.findElement(By.cssSelector(String.format("a[href='/mantisbt-2.25.0/manage_user_page.php?user_id=%s']", user.getId()))).click();
+        wd.findElement(By.cssSelector(String.format("a[href='manage_user_edit_page.php?user_id=%s']", user.getId()))).click();
     }
 	*/
 
