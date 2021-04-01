@@ -1,12 +1,10 @@
 package ru.learning.addressbook.model;
 
-import java.io.File;
 import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.Type;
-import ru.learning.addressbook.model.GroupData;
-import ru.learning.addressbook.model.GroupSet;
 
 import javax.persistence.*;
+import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -100,7 +98,11 @@ public class ContactData {
     }
 	
 	public File getPhoto() {
-        return new File(photo);
+		if (photo == null) {
+			return null;
+		} else {
+			return new File(photo);
+		}
     }
 
     public String getAddress() {

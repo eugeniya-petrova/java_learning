@@ -25,7 +25,7 @@ public class ContactHelper extends HelperBase {
     public void fillContactForm(ContactData contactData, boolean create) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("lastname"), contactData.getLastName());
-		//attach(By.name("photo"), contactData.getPhoto());
+		attach(By.name("photo"), contactData.getPhoto());
         type(By.name("address"), contactData.getAddress());
         type(By.name("home"), contactData.getHomePhone());
         type(By.name("mobile"), contactData.getMobilePhone());
@@ -56,7 +56,8 @@ public class ContactHelper extends HelperBase {
     }
 
     public void selectContactById(int id) {
-        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+        //wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+        wd.findElement(By.cssSelector(String.format("input[value='%s']", id))).click();
     }
 
     public void deleteSelectedContacts() {
