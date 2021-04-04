@@ -29,8 +29,8 @@ public class GroupData {
 	@Column(name = "group_footer")
 	@Type(type = "text") //аннотация для Hibernate, т. к. поле многострочное
     private String footer;
-	
-	@ManyToMany(mappedBy = "groupSet", fetch = FetchType.EAGER)
+
+    @ManyToMany(mappedBy = "groupSet", fetch = FetchType.EAGER)
 	private Set<ContactData> contactSet = new HashSet<ContactData>();
 
     public int getId() {
