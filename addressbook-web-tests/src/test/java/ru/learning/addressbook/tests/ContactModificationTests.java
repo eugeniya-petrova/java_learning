@@ -29,7 +29,7 @@ public class ContactModificationTests extends TestBase {
         app.goTo().homePage();
         assertThat(app.contact().count(), equalTo(before.size())); //сравниваем количество контактов до и после
         ContactSet after = app.db().contactSet();
-        assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+        assertThat(after, equalTo(before.without(modifiedContact).withAdded(app.db().contactById(contact.getId()))));
 		verifyContactListInUI();
     }
 }
