@@ -73,7 +73,7 @@ public class ContactDataGenerator {
         File photo = new File("src/test/resources/robot.png");
         for (int i = 0; i < count; i++) {
             contacts.add(new ContactData().withFirstName(String.format("имя %s", i)).withLastName(String.format("фамилия %s", i)).withPhoto(photo)
-                    .withAddress(String.format("address 1-%s", i)).withHomePhone(String.format("%s-%s-%s", i, i, i))
+                    .withAddress(String.format("address 1-%s", i)).withHomePhone(String.format("%s-%s-%s", i+1, i+1, i+1))
                     .withEmail(String.format("test-%s@test.ru", i)).withAddress2(String.format("address 2-%s", i)));
         }
         return contacts;
