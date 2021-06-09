@@ -41,12 +41,13 @@ public class GroupStepDefinitions {
 	@When("^I create a new group with name (.+), header (.+) and footer (.+)$") //(.+) - входные параметры метода
 	public void createGroup(String name, String header, String footer) {
 		newGroup = new GroupData().withName(name).withHeader(header).withFooter(footer);
+		app.goTo().groupPage();
 		app.group().create(newGroup);
 	}
 	
 	@Then("^the new set of groups is equal to the old set with added group$")
 	public void verifyGroupCreation() {
 		GroupSet newGroupSet = app.db().groupSet();
-		assertThat(newGroupSet, equalTo(groupSet.withAdded(newGroup)));
+		assertThat(newGroupSet, equalTo(groupSet.withAdded(newGroup.withId(newGroupSet.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
 	}
 }
