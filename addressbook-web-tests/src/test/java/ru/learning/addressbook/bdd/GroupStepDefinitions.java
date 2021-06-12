@@ -23,7 +23,8 @@ public class GroupStepDefinitions {
 	
 	@Before //аннотация для Cucumber
 	public void init() throws IOException {
-		app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
+		//значение браузера по умолчанию задаётся здесь, т. к. запускаемый класс GroupTests наследуется не от TestBase
+		app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME)); 
 		app.init();
 	}
 	
