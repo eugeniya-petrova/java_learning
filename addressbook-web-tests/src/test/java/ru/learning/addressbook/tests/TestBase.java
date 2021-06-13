@@ -4,6 +4,7 @@ import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.SkipException;
 import org.testng.annotations.*;
 import ru.learning.addressbook.appmanager.ApplicationManager;
@@ -44,8 +45,12 @@ public class TestBase {
     }
 	
 	@AfterMethod(alwaysRun = true)
-    public void logTestStop(Method m) {
+    public void logTestStop(Method m, ITestResult r) {
         logger.info("Stop test " + m.getName());
+
+        if (r.getStatus() == 2) { //если тест упал
+            logger.info("Test failed with result " + r.toString());
+        }
     }
 
     public void verifyGroupListInUI() {
