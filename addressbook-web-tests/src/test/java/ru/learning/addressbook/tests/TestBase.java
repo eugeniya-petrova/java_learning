@@ -47,10 +47,14 @@ public class TestBase {
 	@AfterMethod(alwaysRun = true)
     public void logTestStop(Method m, ITestResult r) {
         logger.info("Stop test " + m.getName());
+        logger.info(String.valueOf(r.getStatus()));
 
+        /*
         if (r.getStatus() == 2) { //если тест упал
             logger.info("Test failed with result " + r.toString());
         }
+
+         */
     }
 
     public void verifyGroupListInUI() {

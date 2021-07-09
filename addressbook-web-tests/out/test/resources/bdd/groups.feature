@@ -7,6 +7,4 @@ Feature: Groups
 	
 	Examples:
 	| name        | header       | footer      |
-	| test name   | test header  | test footer |
-	| группа 1    | header 1     | footer 1    |
-	| Группа      | верх         | низ         |
+	| Группа 1006 | верх         | низ         |

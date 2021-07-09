@@ -3,6 +3,9 @@
     <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+	    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
         <file>src/test/log/test-${bySecond}.log</file>
         <!-- set immediateFlush to false for much higher logging throughput -->
         <immediateFlush>false</immediateFlush>
