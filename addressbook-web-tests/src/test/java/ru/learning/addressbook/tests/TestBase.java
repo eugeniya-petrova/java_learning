@@ -49,12 +49,10 @@ public class TestBase {
         logger.debug("Stop test " + m.getName());
         logger.debug("test result " + String.valueOf(r.getStatus()));
 
-        /*
         if (r.getStatus() == 2) { //если тест упал
-            logger.info("Test failed with result " + r.toString());
+            logger.debug("Test failed with result " + r.getThrowable().toString());
         }
-
-         */
+        
     }
 
     public void verifyGroupListInUI() {
