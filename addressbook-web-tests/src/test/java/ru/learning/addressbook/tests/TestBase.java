@@ -25,6 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class TestBase {
 
     Logger logger = LoggerFactory.getLogger(TestBase.class);
+    Object attr;
 
     protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
 
@@ -51,6 +52,8 @@ public class TestBase {
 
         if (r.getStatus() == 2) { //если тест упал
             logger.debug("Test failed with result " + r.getThrowable().toString());
+			//logger.debug("Test failed with result " + r.getAttribute("m_throwable").toString());
+            attr = r.getFactoryParameters();
         }
         
     }
