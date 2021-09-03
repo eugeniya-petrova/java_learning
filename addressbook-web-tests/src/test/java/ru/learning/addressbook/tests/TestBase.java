@@ -53,7 +53,7 @@ public class TestBase {
         if (r.getStatus() == 2) { //если тест упал
             logger.debug("Test failed with result " + r.getThrowable().toString());
 			//logger.debug("Test failed with result " + r.getAttribute("m_throwable").toString());
-            logger.debug("Stacktrace " + r.getThrowable().getStackTrace().toString());
+            logger.debug("Stacktrace " + r.getThrowable().getStackTrace()[2].toString());
         }
         
     }
